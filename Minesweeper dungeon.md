@@ -9,7 +9,7 @@ Player start on 1st floor with 30 health. Everytime you enter a new floor, every
 
 After a tile become an empty tile, a number ranged from 0 to 8 will appear on the tile to indicate the number of surroundings' enemies. Player can only move to a number tile.  
 ## Features
-### Player
+### Player attribute
 int level; //increases hp and max_hp when level up  
 int max_hp; //maximum hp you can have  
 int hp; //gameover when health reduced to 0  
