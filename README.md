@@ -4,7 +4,7 @@ COMP 2113 Project for Group 225
 ## Brief identification of the team members
 
 Fong Cheuk Ting, u3035688784  
-[Your name], [Your UID]
+Leung Chak Sum, 3035470905
 
 ## Game description with basic game rules
 
