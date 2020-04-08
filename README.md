@@ -6,65 +6,29 @@ COMP 2113 Project for Group 225
 Fong Cheuk Ting, u3035688784  
 Leung Chak Sum, 3035470905
 
-## Game description with basic game rules
+## Game description
+Sweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a treasure seeker who sneak into a 8 storey dungeon overwhelmed with dangerous monsters to steal the ultimate treasure at the top floor. You have the amazing "minesweeper" ability to sense the presence of surroundings' ememies. Use this power wisely to avoid encountering monsters as much as possible such that you won't run out of stamina before getting the ultimate treasure. There are also mysterious merchants and useful treasures scattered across the dungeon to help you survive till the end.
 
-The game we decided to develop is "魔塔". It is fixed-values RPG with fixed battle result, fixed enemy and fixed rescources such that every same decision will always results in same outcome. However, An extra new gamemode willbe develped with random elements to make the gamemode more "roguelike".
+Player start on 1st floor with 30 health. Everytime you enter a new floor, every tile except your starting location will be "?". Unlike traditional minsweeper game where you can click any tile you wish, treasure seeker doesn't have the ability of teleport. You can only reveal and move to the 4 tiles next your current position by pressing up, down, left and right key. Whenever you reveal a "?" tile, there are three basic possible outcome:
 
-In the game, you will control the champion who attempts to challenge a magical tower. Your goal is to climb to the top to defeat the final boss in order to save the world. The tower is full of dangerous monsters that block your way to the top. You have to battle against them and they will deal damage to you. If your health drop to zero, you will die. Luckily, the tower is also full of strategic resources to help you getting stronger and win the game.
+1)empty tile: nothing will happen
+2)monster tile: a monster will appear on the tile that you must press the key one more time to combat with, then you will lose health
+3)items tile: an items (e.g. gold, potion, treasure box) will appear on the tile, you can press the key one more time to obtain it
+
+After a tile become an empty tile, a number ranged from 0 to 8 will appear on the tile to indicate the number of surroundings' enemies. Player can only move to a number tile.
+
+
+## Requirements Mapping
+The following table show the mapping between our features and coding requirement 1-5.
+
+| Feature             | Requirement | Description                                                                                                                                                    |
+|---------------------|:-----------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Level generation    |      1      | Enemies, power-ups and other objects will be place randomly when generating a new level.                                                                       |
+| Combat event        |      1      | Combat damage will include a random element.                                                                                                                   |
+| Game objects        |     2, 3    | Enemies, power-ups, .etc will be stored as instance objects of the corresponding class, create or removed when necessary.<br>(e.g Delete when enemy is killed) |
+| Save game           |      4      | Game can be saved in at any time. It is saved using files.                                                                                                     |
+| Modular programming |      5      | Each module will be contained in a separate file.                                                                                                              |
+
+
 
 ## Features
-### Champion attribute
-int level; //increases stats when level up  
-int hp; //gameover when health reduced to 0  
-int atk; //attack  
-int def; //defence  
-int mdef; //magical defence  
-int floor, x, y; //position of player in the tower  
-int gold; //amount of gold you have  
-int exp; //experience needed to level up  
-int face; //the direction you are facing  
-int yellow_key, blue_key, red_key; //number of keys in your inventory
-int pickaxe, teleporter, ...; //number of special items in your inventory  
-### Monsters attribute
-int level; //indicate the strength of the enemy, useful in rougelike mode
-int hp; //reduce its health to 0 to kill it  
-int atk; //attack  
-int def; //defence  
-int gold; //gold gained from killing it  
-int exp; //experience gained from killing it  
-
-### Resources list
-#### equipments
-#### energy gems
-'a': increases atk  
-'d': increases def  
-'m': increases mdef  
-#### health potions
-'h': increases hp
-#### keys
-'y': yellow key  
-'b': blue key  
-'r': red key  
-#### special items
-'p': pickaxe, used to break a wall
-'t': teleporter, teleport to the opposite side of the current floor w.r.t. the center
-### Map features
-#### Wall
-'W': impassible tile, breakable with pickaxe
-#### Void
-'\*': impassible tile, unbreakable with pickaxe
-#### Door
-'Y': impassible tile, spend a yellow key to open  
-'B': impassible tile, spend a blue key to open  
-'R': impassible tile, spend a red key to open  
-#### Stair
-'U': floor up  
-'D': floor down  
-### rougelike mode
-Monsters and resources are randomized across the tower
-## Function
-### Map and statistic display
-### Battle damage calculator
-### Merchent system, trade gold for stats
-### Save/Load system
-### Monsters and resources random generator for the rougelike mode
