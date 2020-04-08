@@ -101,7 +101,7 @@ Player will gain or lose score when they achieve certain progress in the game. I
 5) get the ultimate treasure: +1000  
 6) each hp and gold remained:+1  
 
-### High Score Mode
+### High Score
 Save highscore once a game is completed. Sorting algorithm is used here.
 
 ### Test Mode
