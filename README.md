@@ -115,6 +115,7 @@ Preliminary design as follows, subject to change.
 
 ![global structure chart](/charts/Global_Structure.png)
 
+
 ### Main Game
 
 ![global structure chart](/charts/main_game_flowchart.png)
