@@ -4,8 +4,10 @@
 
 int main() {
     
+    // F**K PascalCase, WhoTF invented PascalCase when there is snake_case 
+
     MainMenuInit();
 
-    return(0);
+    return (0);
 }
 

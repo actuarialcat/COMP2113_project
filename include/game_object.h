@@ -3,12 +3,24 @@
 #ifndef GAME_OBJECT_H_
 #define GAME_OBJECT_H_
 
-class Map{
+class PlayerClass{
 public:
+    int level;
 
 private:
+    void move(int x, int y);    //move the player
+};
 
-}
+//****************************** 
+
+class MapClass{
+public:
+    
+private:
+
+};
+
+//****************************** 
 
 class Wall{
 public:
@@ -20,6 +32,6 @@ public:
 
 private:
 
-}
+};
 
 #endif  // GAME_OBJECT_H_
