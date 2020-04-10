@@ -11,9 +11,9 @@ Sweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a treasur
 
 Player start on 1st floor with 30 health. Everytime you enter a new floor, every tile except your starting location will be "?". Unlike traditional minsweeper game where you can click any tile you wish, treasure seeker doesn't have the ability of teleport. You can only reveal and move to the 4 tiles next your current position by pressing up, down, left and right key. Whenever you reveal a "?" tile, there are three basic possible outcome:
 
-1)empty tile: nothing will happen
-2)monster tile: a monster will appear on the tile that you must press the key one more time to combat with, then you will lose health
-3)items tile: an items (e.g. gold, potion, treasure box) will appear on the tile, you can press the key one more time to obtain it
+1)empty tile: nothing will happen  
+2)monster tile: a monster will appear on the tile that you must press the key one more time to combat with, then you will lose health  
+3)items tile: an items (e.g. gold, potion, treasure box) will appear on the tile, you can press the key one more time to obtain it  
 
 After a tile become an empty tile, a number ranged from 0 to 8 will appear on the tile to indicate the number of surroundings' enemies. Player can only move to a number tile.
 
@@ -61,9 +61,9 @@ int inventory[]; //an array to store your treasures
 
 #### Map features
 'W' //impassible wall, surrounding the floor, no number reveal 
-'\*' //impassible void, randomly generated on the floor with no number reveal 
-* fixed: location determined during level design
-* (Later implemetation) random: need path finder function to make sure every other tile is reachable
+'\*' //impassible void, randomly generated on the floor with no number reveal   
+* fixed: location determined during level design  
+* (Later implemetation) random: need path finder function to make sure every other tile is reachable  
 'U' //stair up to the next floor, randomly generated one per each floor  
 
 #### Teasures
