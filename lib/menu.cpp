@@ -7,9 +7,6 @@ using namespace std;
 
 void MainMenuInit()
 {
-  //get standard screen size
-  int yMax, xMax;
-  getmaxyx(stdscr, yMax, xMax);
   //create window for menu
   WINDOW * menu = newwin(10,22,0,0);
   box(menu, 0, 0);

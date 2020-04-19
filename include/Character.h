@@ -2,10 +2,21 @@
 #define CHARACTER_H
 
 class Character {
-  int _hp;
-  int _x, _y;
-  int _floor;
-  char _symbol;
+public:
+  //variable
+  char symbol;
+  int flr;
+  int lv;
+  int expr; //expereince needed to level up
+  int max_hp, hp;
+  int y, x;
+  int score;
+
+  //Constructer
+  Character(char symbol);
+
+  //void level_up();
+
 
 };
 
