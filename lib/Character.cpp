@@ -1,7 +1,7 @@
 #include "../include/Character.h"
 
-Character::Character(char symbol){
-  symbol = symbol;
+Character::Character(char sym){
+  symbol = sym;
   lv = 1;
   expr = 100;
   max_hp = 30;

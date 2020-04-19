@@ -13,7 +13,7 @@ public:
   int score;
 
   //Constructer
-  Character(char symbol);
+  Character(char sym);
 
   //void level_up();
 

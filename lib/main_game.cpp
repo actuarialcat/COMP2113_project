@@ -22,16 +22,15 @@ void MainGameInit()
   box(stats, 0, 0);
   WINDOW * dungeon = newwin(height+2,width+2,0,10);
   box(dungeon, 0, 0);
+  //used to display game event message e.g. level up, ambushed by monster
   WINDOW * datalog = newwin(4, 10+width+2, height+2, 0);
   box(datalog, 0, 0);
   //Init character
   Character p('@');
   Map m(height, width, p.flr);
+  m.generate();
   //generate map objects
-  refresh();
-  update_stats(p, stats);
-  update_dungeon(m, dungeon);
-  update_datalog("Hello", datalog);
+
   //start game
   GameLoop(p, m, stats, dungeon, datalog);
 
@@ -40,6 +39,10 @@ void MainGameInit()
 void GameLoop(Character p,Map m, WINDOW * & stats, WINDOW * & dungeon,
 WINDOW * & datalog)
 {
+  refresh();
+  update_stats(p, stats);
+  update_dungeon(m, dungeon);
+  update_datalog("", datalog);
   //display everything
   while(true)
   {
@@ -67,9 +70,9 @@ void update_dungeon(Map m, WINDOW * dungeon)
   wclear(dungeon);
   box(dungeon, 0, 0);
   mvwprintw(dungeon, 1, 1, "%c", m.map[0][1][1]);
-  for (int i=0;i<10;i++) //I don't know why m.height and m.width don't work
+  for (int i=0;i<m.height;i++) //I don't know why m.height and m.width don't work
   {
-    for (int j=0;j<20;j++)
+    for (int j=0;j<m.width;j++)
     {
       if (m.map[0][i][j] != ' ')
         mvwprintw(dungeon, i+1, j+1, "%c", m.map[0][i][j]);

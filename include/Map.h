@@ -11,11 +11,12 @@ public:
   int flr;
   /*
   Init 3 layers 2d map
-  1st layer: ? layer
-  2nd layer: game objects layer
-  3rd layer: number layer
+  upper layer: ? layer
+  middle layer: game objects layer
+  lower layer: number layer
   */
   vector<vector<vector<char>>> map;
-  Map(int height, int width, int flr);
+  Map(int h, int w, int flr);
+  void generate();
 };
 #endif
