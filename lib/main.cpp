@@ -1,11 +1,18 @@
-//Main Program
-
+#include <ncurses.h>
 #include "../include/menu.h"
 
-int main() {
+int main(){
+  //initialize ncurses screen
+  initscr();
+  //user input doesn't print on screen
+  noecho();
+  /*press ctrl+c to break the program
+   without closing the terminal*/
+  cbreak();
+  //Initialize menu
+  MainMenuInit();
+  //clear ncurses data structure
+  endwin();
 
-    MainMenuInit();
-
-    return (0);
+  return (0);
 }
-

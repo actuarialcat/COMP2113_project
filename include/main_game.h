@@ -1,8 +1,6 @@
-//Header file for main game functions
-
 #ifndef MAIN_GAME_H_
 #define MAIN_GAME_H_
 
-void MainGameInit();    //Start main game
+void MainGameInit();
 
-#endif  // MAIN_GAME_H_
+#endif
