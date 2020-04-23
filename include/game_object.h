@@ -12,7 +12,7 @@ public:
   //fuctions
   char getDisplayChar();
 
-  virtual int collisionCheck(Character &player);   //0 for pass, 1 for collision
+  virtual bool collisionCheck(Character &player);   //False for movable, True for collision
   virtual void postMoveAction(Character &player);
 
 protected:
@@ -35,7 +35,7 @@ public:
   ObjectWall(char display_symbol);
 
   //fuctions
-  int collisionCheck(Character &player);
+  bool collisionCheck(Character &player);
   void postMoveAction(Character &player);
 
 };
@@ -50,7 +50,7 @@ public:
   ObjectFloor(char display_symbol);
 
   //fuctions
-  int collisionCheck(Character &player);
+  bool collisionCheck(Character &player);
   void postMoveAction(Character &player);
 
 };
@@ -65,7 +65,7 @@ public:
   ObjectEnemy(char display_symbol, int init_hp);
 
   //fuctions
-  int collisionCheck(Character &player);
+  bool collisionCheck(Character &player);
   void postMoveAction(Character &player);
 
 private:

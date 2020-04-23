@@ -14,7 +14,7 @@ char GameObjectBase::getDisplayChar() {
   return display_char;
 }
 
-int GameObjectBase::collisionCheck(Character &player){
+bool GameObjectBase::collisionCheck(Character &player){
   return 1;
 }
 
@@ -30,8 +30,8 @@ ObjectWall::ObjectWall(char display_symbol) : GameObjectBase(display_symbol) {
   //do nothing
 }
 
-int ObjectWall::collisionCheck(Character &player){
-  return 1;
+bool ObjectWall::collisionCheck(Character &player){
+  return true;
 }
 
 void ObjectWall::postMoveAction(Character &player){
@@ -42,12 +42,12 @@ void ObjectWall::postMoveAction(Character &player){
 /////////////////////////////////////////////
 //ObjectFloor
 
-ObjectFloor::ObjectWall(char display_symbol) : GameObjectBase(display_symbol) {
+ObjectFloor::ObjectFloor(char display_symbol) : GameObjectBase(display_symbol) {
   //do nothing
 }
 
-int ObjectFloor::collisionCheck(Character &player){
-  return 0;
+bool ObjectFloor::collisionCheck(Character &player){
+  return false;
 }
 
 void ObjectFloor::postMoveAction(Character &player){
@@ -64,9 +64,9 @@ ObjectEnemy::ObjectEnemy(char display_symbol, int init_hp)
   hp = init_hp;
 }
 
-int ObjectEnemy::collisionCheck(Character &player){
+bool ObjectEnemy::collisionCheck(Character &player){
   //TODO:
-  return 1;
+  return true;
 }
 
 void ObjectEnemy::postMoveAction(Character &player){

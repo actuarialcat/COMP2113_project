@@ -3,6 +3,7 @@
 
 #include "../include/Character.h"
 #include "../include/Map.h"
+#include "../include/game_object.h"
 
 /////////////////////////////////////////////
 //Private functions declaration
@@ -67,18 +68,18 @@ void update_dungeon(Map m, WINDOW *dungeon)
 {
   wclear(dungeon);
   box(dungeon, 0, 0);
-  mvwprintw(dungeon, 1, 1, "%c", m.map[0][1][1]);
+  //mvwprintw(dungeon, 1, 1, "%c", m.map[0][1][1]);   //Question: what is this for?
 
-  for (int i=0;i<m.height;i++) //I don't know why m.height and m.width don't work
+  for (int i=0; i<m.height; i++) //I don't know why m.height and m.width don't work
   {
-    for (int j=0;j<m.width;j++)
+    for (int j=0; j<m.width; j++)
     {
-      if (m.map[0][i][j] != ' ')
-        mvwprintw(dungeon, i+1, j+1, "%c", m.map[0][i][j]);
-      else if (m.map[1][i][j] != ' ')
-        mvwprintw(dungeon, i+1, j+1, "%c", m.map[1][i][j]);
+      if (m.discovery_layer[i][j] != ' ')
+        mvwprintw(dungeon, i+1, j+1, "%c", m.discovery_layer[i][j]);
+      else if (m.object_layer[i][j]->getDisplayChar() != ' ')
+        mvwprintw(dungeon, i+1, j+1, "%c", m.object_layer[i][j]->getDisplayChar());
       else
-        mvwprintw(dungeon, i+1, j+1, "%c", m.map[2][i][j]);
+        mvwprintw(dungeon, i+1, j+1, "%c", m.number_layer[i][j]);
     }
   }
 

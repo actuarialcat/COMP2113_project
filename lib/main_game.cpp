@@ -37,7 +37,6 @@ void MainGameInit(){
 
   //Init Map
   Map m(height, width, p.flr);
-  m.generate();
 
   //generate map objects
 
