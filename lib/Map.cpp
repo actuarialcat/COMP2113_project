@@ -14,6 +14,7 @@ Map::Map(int h, int w, int flr)
     3, vector<vector<char>>(height, vector<char>(width, ' ')));
   map = map2;
 }
+
 void Map::generate()
 {
   srand(time(NULL));

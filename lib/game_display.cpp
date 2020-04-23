@@ -5,11 +5,12 @@
 #include "../include/Map.h"
 
 /////////////////////////////////////////////
-//private functions declaration
+//Private functions declaration
 
 void update_stats(Character, WINDOW *);
 void update_dungeon(Map, WINDOW *);
 void update_datalog(string, WINDOW * datalog);
+
 
 /////////////////////////////////////////////
 //Display Functions
@@ -34,9 +35,8 @@ void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog,
 
 }
 
-//-------------------------------------------------------
-//Update display
 
+//Update display
 void update_all_display(Character p, Map m, string message, WINDOW *stats, WINDOW *dungeon, 
     WINDOW *datalog) {
   refresh();
@@ -48,6 +48,7 @@ void update_all_display(Character p, Map m, string message, WINDOW *stats, WINDO
 
 
 /////////////////////////////////////////////
+//Private functions
 
 void update_stats(Character p, WINDOW *stats)
 {
