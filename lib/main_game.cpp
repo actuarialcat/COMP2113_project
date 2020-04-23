@@ -11,7 +11,7 @@
 
 void GameLoop(Character, Map, WINDOW * &, WINDOW * &, WINDOW * &);
 bool check_not_end_game();
-void MoveInput(WINDOW *dungeon, int &move_target_x, int &move_target_y);
+int MoveInput(WINDOW *dungeon, int &move_target_x, int &move_target_y);
 
 
 //Manu Logic
@@ -53,30 +53,38 @@ void GameLoop(Character player, Map game_map,
     WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog){
 
   bool end_game = false;
+  string test_str = "Test";
+
+  //reveal map under starting point
+  game_map.discovery_layer[player.y][player.x] = ' ';
   
   while(check_not_end_game()){
-    int input, move_target_x = 0, move_target_y = 0;
+    int input, move_dir_x = 0, move_dir_y = 0;
+    int move_target_x, move_target_y;
+
+    //testing
+    test_str = to_string(player.y) + " " + to_string(player.x);
 
     //display everything
-    update_all_display(player, game_map, "", stats, dungeon, datalog);    //game_display.h
+    update_all_display(player, game_map, test_str, stats, dungeon, datalog);    //game_display.h
 
     //control input
-    MoveInput(dungeon, move_target_x, move_target_y);
+    int x = MoveInput(datalog, move_dir_x, move_dir_y);
+    move_target_y = player.y + move_dir_y;
+    move_target_x = player.x + move_dir_x;
 
     //collision check and pre-move interaction
-    if( game_map.object_layer[move_target_x][move_target_y]->collisionCheck(player) ){
+    if( game_map.object_layer[move_target_y][move_target_x]->collisionCheck(player) ){
       //moving
       player.y = move_target_y;
       player.x = move_target_x;
 
       //reveal map
-      game_map.discovery_layer[move_target_x][move_target_y] = ' ';
+      game_map.discovery_layer[player.y][player.x] = ' ';
 
       //post move interaction
-      game_map.object_layer[move_target_x][move_target_y]->postMoveAction(player);
+      game_map.object_layer[player.y][player.x]->postMoveAction(player);
     }
-
-
 
   }
   Gameover();
@@ -90,9 +98,12 @@ bool check_not_end_game(){
 
 
 //Get user GUI input
-void MoveInput(WINDOW *dungeon, int &move_target_x, int &move_target_y) {
+int MoveInput(WINDOW *dungeon, int &move_target_x, int &move_target_y) {
   bool valid = false;
-  int input, output = -1;  
+  int input;
+
+  wrefresh(dungeon);
+  keypad(dungeon, true);
 
   while(!valid){
     input = wgetch(dungeon);
@@ -122,17 +133,20 @@ void MoveInput(WINDOW *dungeon, int &move_target_x, int &move_target_y) {
         valid = true;
         break;
 
-      case KEY_EXIT:
-        //call game pause manu;
+      /*call game pause manu;
+      case :
+        
         valid = true;
         break;
+      */
 
       default:
+        valid = true;
         break;
     }
   }
 
-  return;
+  return input;
 }
 
 
