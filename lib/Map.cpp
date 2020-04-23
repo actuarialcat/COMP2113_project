@@ -10,8 +10,7 @@ Map::Map(int h, int w, int flr)
   height = h;
   width = w;
   flr = flr;
-  vector<vector<vector<char>>> map2(
-    3, vector<vector<char>>(height, vector<char>(width, ' ')));
+  vector<vector<vector<char>>> map2(3, vector<vector<char>>(height, vector<char>(width, ' ')));
   map = map2;
 }
 

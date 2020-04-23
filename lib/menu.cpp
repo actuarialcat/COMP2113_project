@@ -42,6 +42,7 @@ void MainMenuInit() {
 void InitMenuDisplay(WINDOW *&menu) {
 
   menu = newwin(10,22,0,0);
+  
   //create window for menu
   box(menu, 0, 0);
   refresh();

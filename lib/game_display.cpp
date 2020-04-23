@@ -68,6 +68,7 @@ void update_dungeon(Map m, WINDOW *dungeon)
   wclear(dungeon);
   box(dungeon, 0, 0);
   mvwprintw(dungeon, 1, 1, "%c", m.map[0][1][1]);
+
   for (int i=0;i<m.height;i++) //I don't know why m.height and m.width don't work
   {
     for (int j=0;j<m.width;j++)
@@ -80,6 +81,7 @@ void update_dungeon(Map m, WINDOW *dungeon)
         mvwprintw(dungeon, i+1, j+1, "%c", m.map[2][i][j]);
     }
   }
+
   wrefresh(dungeon);
 }
 
