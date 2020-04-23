@@ -3,22 +3,30 @@ src = src/
 inc = include/
 FLAG = -pedantic-errors -std=c++11
 LDLIBS = -lncurses
+
 #//////////////////////////////
+$(src)game_display.o: $(lib)game_display.cpp $(inc)game_display.h $(inc)Character.h $(inc)Map.h
+	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+
 $(src)menu.o: $(lib)menu.cpp $(inc)menu.h
 	g++ $(FLAG) -c $< $(LDLIBS) -o $@
-$(src)main_game.o: $(lib)main_game.cpp $(inc)main_game.h $(inc)menu.h $(inc)Character.h $(inc)Map.h
+
+$(src)main_game.o: $(lib)main_game.cpp $(inc)main_game.h $(inc)menu.h $(inc)Character.h $(inc)Map.h $(inc)game_display.h
 	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+
 $(src)Character.o: $(lib)Character.cpp $(inc)Character.h
 	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+
 $(src)Map.o: $(lib)Map.cpp $(inc)Map.h
 	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+	
 $(src)main.o: $(lib)main.cpp $(inc)menu.h
 	g++ $(FLAG) -c $< $(LDLIBS) -o $@
 
 
 #//////////////////////////////
 
-main: $(src)main.o $(src)menu.o $(src)main_game.o $(src)Character.o $(src)Map.o
+main: $(src)main.o $(src)menu.o $(src)main_game.o $(src)Character.o $(src)Map.o $(src)game_display.o
 	g++ $(FLAG) $^ $(LDLIBS) -o $@
 
 
