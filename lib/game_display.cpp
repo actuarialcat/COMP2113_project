@@ -3,17 +3,18 @@
 
 #include "../include/Character.h"
 #include "../include/Map.h"
+#include "../include/game_object.h"
 
 /////////////////////////////////////////////
 //Private functions declaration
 
-void update_stats(Character, WINDOW *);
-void update_dungeon(Map, WINDOW *);
-void update_datalog(string, WINDOW * datalog);
+void update_stats(Character p, WINDOW *stats);
+void update_dungeon(Character p, Map m, WINDOW *dungeon);
+void update_datalog(string message, WINDOW *datalog);
 
 
 /////////////////////////////////////////////
-//Display Functions
+//Public Functions
 
 //Initilize
 void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, 
@@ -41,7 +42,7 @@ void update_all_display(Character p, Map m, string message, WINDOW *stats, WINDO
     WINDOW *datalog) {
   refresh();
   update_stats(p, stats);
-  update_dungeon(m, dungeon);
+  update_dungeon(p, m, dungeon);
   update_datalog(message, datalog);
 
 }
@@ -63,23 +64,28 @@ void update_stats(Character p, WINDOW *stats)
   wrefresh(stats);
 }
 
-void update_dungeon(Map m, WINDOW *dungeon)
+void update_dungeon(Character p, Map m, WINDOW *dungeon)
 {
   wclear(dungeon);
   box(dungeon, 0, 0);
-  mvwprintw(dungeon, 1, 1, "%c", m.map[0][1][1]);
-  for (int i=0;i<m.height;i++) //I don't know why m.height and m.width don't work
+
+  //display map
+  for (int i=0; i<m.height; i++) //I don't know why m.height and m.width don't work
   {
-    for (int j=0;j<m.width;j++)
+    for (int j=0; j<m.width; j++)
     {
-      if (m.map[0][i][j] != ' ')
-        mvwprintw(dungeon, i+1, j+1, "%c", m.map[0][i][j]);
-      else if (m.map[1][i][j] != ' ')
-        mvwprintw(dungeon, i+1, j+1, "%c", m.map[1][i][j]);
+      if (m.discovery_layer[i][j] != ' ')
+        mvwprintw(dungeon, i+1, j+1, "%c", m.discovery_layer[i][j]);
+      else if (m.object_layer[i][j]->getDisplayChar() != ' ')
+        mvwprintw(dungeon, i+1, j+1, "%c", m.object_layer[i][j]->getDisplayChar());
       else
-        mvwprintw(dungeon, i+1, j+1, "%c", m.map[2][i][j]);
+        mvwprintw(dungeon, i+1, j+1, "%c", m.number_layer[i][j]);
     }
   }
+
+  //display player
+  mvwprintw(dungeon, p.y+1, p.x+1, "%c", p.symbol);
+
   wrefresh(dungeon);
 }
 

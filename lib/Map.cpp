@@ -1,37 +1,62 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+
 using namespace std;
 
 #include "../include/Map.h"
+#include "../include/game_object.h"
+
+/////////////////////////////////////////////
 
 Map::Map(int h, int w, int flr)
 {
   height = h;
   width = w;
-  flr = flr;
-  vector<vector<vector<char>>> map2(
-    3, vector<vector<char>>(height, vector<char>(width, ' ')));
-  map = map2;
+  floor = flr;
+
+  //common pointer for deuplicative static objects
+  wall_ptr = new ObjectWall('W');
+  floor_ptr = new ObjectFloor(' ');
+
+  vector<vector<char>> null_char_map(height, vector<char>(width, ' '));
+  discovery_layer = null_char_map;
+  number_layer = null_char_map;
+
+  vector<vector<GameObjectBase *>> null_object_map(height, vector<GameObjectBase *>(width, floor_ptr));
+  object_layer = null_object_map;
+
+
+  //Generate each layer
+  int num_of_enemy = 40; //depending on floor?
+
+  placeEnemyRandom(num_of_enemy);
+  generateNumberLayer();
+  generateDiscoveryLayer();
+
 }
 
-void Map::generate()
-{
+/////////////////////////////////////////////
+
+void Map::placeEnemyRandom(int num_of_enemy){
   srand(time(NULL));
-  map[1][2][3] = 'E';
-  //distribute monsters on the middle layer
-  int monsters = 40; //more monsters on higher floor
-  while(monsters > 0)
-  {
+
+  //randomly place enemy
+  while(num_of_enemy > 0) {
     int randy = rand() % height;
     int randx = rand() % width;
-    if (map[1][randy][randx] == ' ')
-    {
-      map[1][randy][randx] = 'E';
-      monsters--;
+    
+    if (object_layer[randy][randx] == floor_ptr) {
+      object_layer[randy][randx] = new ObjectEnemy('E', 10);
+      num_of_enemy--;
     }
   }
-  //assign number on the lowest number layers
+  
+}
+
+
+void Map::generateNumberLayer(){
+  //assign number on the number layer
   for (int i=0;i<height;i++)
   {
     for (int j=0;j<width;j++)
@@ -49,19 +74,25 @@ void Map::generate()
             continue;
           if (j+l == -1 || j+l == width)
             continue;
-          if (map[1][i+k][j+l] == 'E')
+          if (object_layer[i+k][j+l]->getDisplayChar() == 'E')
             count++;
         }
       }
-      map[2][i][j] = 48 + count;
+      number_layer[i][j] = '0' + count;
     }
   }
-  //the upper layer covered with ?
+
+}
+
+
+void Map::generateDiscoveryLayer(){
+  //the discovery layer covered with ?
   for (int i=0;i<height;i++)
   {
     for (int j=0;j<width;j++)
     {
-      map[0][i][j] = '?';
+      discovery_layer[i][j] = '?';
     }
   }
+
 }
