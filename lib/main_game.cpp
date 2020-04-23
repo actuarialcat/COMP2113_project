@@ -4,40 +4,54 @@
 #include "../include/menu.h"
 #include "../include/Character.h"
 #include "../include/Map.h"
-//function declaration
+
+/////////////////////////////////////////////
+//private functions declaration
+
 void Gameover();
 void update_stats(Character, WINDOW *);
 void update_dungeon(Map, WINDOW *);
 void update_datalog(string, WINDOW * datalog);
 void GameLoop(Character, Map, WINDOW * &, WINDOW * &, WINDOW * &);
+
+
+void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, int height, int width);
+
+
+/////////////////////////////////////////////
+
+
+/////////////////////////////////////////////
+
 //Game Initialization
-void MainGameInit()
-{
-  clear(); //clear the menu
+void MainGameInit(){
+  WINDOW *stats, *dungeon, *datalog;
+
   int height, width;
   height = 10;
   width = 20;
-  //Init three panel
-  WINDOW * stats = newwin(height+2,10,0,0);
-  box(stats, 0, 0);
-  WINDOW * dungeon = newwin(height+2,width+2,0,10);
-  box(dungeon, 0, 0);
-  //used to display game event message e.g. level up, ambushed by monster
-  WINDOW * datalog = newwin(4, 10+width+2, height+2, 0);
-  box(datalog, 0, 0);
+
+  //Init Display
+  InitGameDisplay(stats, dungeon, datalog, height, width);
+
   //Init character
   Character p('@');
+
+  //Init Map
   Map m(height, width, p.flr);
   m.generate();
+
   //generate map objects
 
   //start game
   GameLoop(p, m, stats, dungeon, datalog);
-
 }
-//--------------------------------------------------------
-void GameLoop(Character p,Map m, WINDOW * & stats, WINDOW * & dungeon,
-WINDOW * & datalog)
+
+/////////////////////////////////////////////
+//Game Logic
+
+void GameLoop(Character p,Map m, WINDOW * & stats, WINDOW * & dungeon, 
+    WINDOW * & datalog)
 {
   refresh();
   update_stats(p, stats);
@@ -51,6 +65,34 @@ WINDOW * & datalog)
   }
   Gameover();
 }
+
+
+
+/////////////////////////////////////////////
+//Ulitities Functions
+
+
+//Init Functions
+void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, 
+    int height, int width){
+      
+  //clear the menu
+  clear();
+
+  //Init three panel
+  stats = newwin(height+2,10,0,0);
+  box(stats, 0, 0);
+
+  dungeon = newwin(height+2,width+2,0,10);
+  box(dungeon, 0, 0);
+
+    //used to display game event message e.g. level up, ambushed by monster
+  datalog = newwin(4, 10+width+2, height+2, 0); 
+  box(datalog, 0, 0);
+
+
+}
+
 //-------------------------------------------------------
 void update_stats(Character p, WINDOW * stats)
 {
@@ -64,6 +106,7 @@ void update_stats(Character p, WINDOW * stats)
   mvwprintw(stats, 10, 1, "%d", p.score);
   wrefresh(stats);
 }
+
 //--------------------------------------------------------
 void update_dungeon(Map m, WINDOW * dungeon)
 {
@@ -84,6 +127,7 @@ void update_dungeon(Map m, WINDOW * dungeon)
   }
   wrefresh(dungeon);
 }
+
 //--------------------------------------------------------
 void update_datalog(string message, WINDOW * datalog)
 {
@@ -92,6 +136,7 @@ void update_datalog(string message, WINDOW * datalog)
   mvwprintw(datalog, 1, 1, message.c_str());
   wrefresh(datalog);
 }
+
 //----------------------------------------------------------
 void Gameover()
 {
