@@ -8,14 +8,17 @@
 /////////////////////////////////////////////
 //private functions declaration
 
-void Gameover();
+void GameLoop(Character, Map, WINDOW * &, WINDOW * &, WINDOW * &);
+
+//Display Functions
+void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, int height, int width);
+void update_all_display(Character p, Map m, string message, WINDOW *stats, WINDOW *dungeon, WINDOW *datalog);
 void update_stats(Character, WINDOW *);
 void update_dungeon(Map, WINDOW *);
 void update_datalog(string, WINDOW * datalog);
-void GameLoop(Character, Map, WINDOW * &, WINDOW * &, WINDOW * &);
 
-
-void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, int height, int width);
+//Manu Logic
+void Gameover();
 
 
 /////////////////////////////////////////////
@@ -53,11 +56,9 @@ void MainGameInit(){
 void GameLoop(Character p,Map m, WINDOW * & stats, WINDOW * & dungeon, 
     WINDOW * & datalog)
 {
-  refresh();
-  update_stats(p, stats);
-  update_dungeon(m, dungeon);
-  update_datalog("", datalog);
   //display everything
+  update_all_display(p, m, "", stats, dungeon, datalog);
+
   while(true)
   {
     int input = wgetch(dungeon);
@@ -69,13 +70,12 @@ void GameLoop(Character p,Map m, WINDOW * & stats, WINDOW * & dungeon,
 
 
 /////////////////////////////////////////////
-//Ulitities Functions
+//Display Functions
 
-
-//Init Functions
+//Initilize
 void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, 
     int height, int width){
-      
+
   //clear the menu
   clear();
 
@@ -90,11 +90,22 @@ void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog,
   datalog = newwin(4, 10+width+2, height+2, 0); 
   box(datalog, 0, 0);
 
-
 }
 
 //-------------------------------------------------------
-void update_stats(Character p, WINDOW * stats)
+//Update display
+
+void update_all_display(Character p, Map m, string message, WINDOW *stats, WINDOW *dungeon, 
+    WINDOW *datalog) {
+  refresh();
+  update_stats(p, stats);
+  update_dungeon(m, dungeon);
+  update_datalog(message, datalog);
+
+}
+
+
+void update_stats(Character p, WINDOW *stats)
 {
   wclear(stats);
   box(stats, 0, 0);
@@ -107,8 +118,7 @@ void update_stats(Character p, WINDOW * stats)
   wrefresh(stats);
 }
 
-//--------------------------------------------------------
-void update_dungeon(Map m, WINDOW * dungeon)
+void update_dungeon(Map m, WINDOW *dungeon)
 {
   wclear(dungeon);
   box(dungeon, 0, 0);
@@ -128,8 +138,7 @@ void update_dungeon(Map m, WINDOW * dungeon)
   wrefresh(dungeon);
 }
 
-//--------------------------------------------------------
-void update_datalog(string message, WINDOW * datalog)
+void update_datalog(string message, WINDOW *datalog)
 {
   wclear(datalog);
   box(datalog, 0, 0);
@@ -137,7 +146,10 @@ void update_datalog(string message, WINDOW * datalog)
   wrefresh(datalog);
 }
 
-//----------------------------------------------------------
+
+/////////////////////////////////////////////
+//Manu Logic
+
 void Gameover()
 {
   clear();
