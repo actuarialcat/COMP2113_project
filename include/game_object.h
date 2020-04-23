@@ -12,7 +12,7 @@ public:
   //fuctions
   char getDisplayChar();
 
-  virtual bool collisionCheck(Character &player);   //False for movable, True for collision
+  virtual bool collisionCheck(Character &player);   //True for movable, False for collision
   virtual void postMoveAction(Character &player);
 
 protected:

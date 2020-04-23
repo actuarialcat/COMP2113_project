@@ -31,7 +31,7 @@ ObjectWall::ObjectWall(char display_symbol) : GameObjectBase(display_symbol) {
 }
 
 bool ObjectWall::collisionCheck(Character &player){
-  return true;
+  return false;
 }
 
 void ObjectWall::postMoveAction(Character &player){
@@ -47,7 +47,7 @@ ObjectFloor::ObjectFloor(char display_symbol) : GameObjectBase(display_symbol) {
 }
 
 bool ObjectFloor::collisionCheck(Character &player){
-  return false;
+  return true;
 }
 
 void ObjectFloor::postMoveAction(Character &player){
