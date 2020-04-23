@@ -1,29 +1,25 @@
-#Makefile for COMP2113_project
-
 lib = lib/
 src = src/
 inc = include/
 FLAG = -pedantic-errors -std=c++11
+LDLIBS = -lncurses
+#//////////////////////////////
+$(src)menu.o: $(lib)menu.cpp $(inc)menu.h
+	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+$(src)main_game.o: $(lib)main_game.cpp $(inc)main_game.h $(inc)menu.h $(inc)Character.h $(inc)Map.h
+	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+$(src)Character.o: $(lib)Character.cpp $(inc)Character.h
+	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+$(src)Map.o: $(lib)Map.cpp $(inc)Map.h
+	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+$(src)main.o: $(lib)main.cpp $(inc)menu.h
+	g++ $(FLAG) -c $< $(LDLIBS) -o $@
+
 
 #//////////////////////////////
 
-$(src)game_object.o: $(lib)game_object.cpp $(inc)game_object.h 
-	g++ $(FLAG) -c $< -o $@
-
-$(src)main_game.o: $(lib)main_game.cpp $(inc)menu.h $(inc)display.h $(inc)game_object.h 
-	g++ $(FLAG) -c $< -o $@
-
-$(src)menu.o: $(lib)menu.cpp $(inc)menu.h $(inc)display.h $(inc)main_game.h 
-	g++ $(FLAG) -c $< -o $@
-
-$(src)main.o: $(lib)main.cpp $(inc)menu.h 
-	g++ $(FLAG) -c $< -o $@
-
-
-#//////////////////////////////
-
-main: $(src)main.o $(src)menu.o $(src)main_game.o $(src)game_object.o
-	g++ $(FLAG) $^ -o $@
+main: $(src)main.o $(src)menu.o $(src)main_game.o $(src)Character.o $(src)Map.o
+	g++ $(FLAG) $^ $(LDLIBS) -o $@
 
 
 #//////////////////////////////

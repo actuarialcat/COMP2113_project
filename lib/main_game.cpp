@@ -1,71 +1,100 @@
-//Menu Game Functions
+#include <ncurses.h>
+#include <string>
 
-//****************************** Header Libraries
+#include "../include/menu.h"
+#include "../include/Character.h"
+#include "../include/Map.h"
+//function declaration
+void Gameover();
+void update_stats(Character, WINDOW *);
+void update_dungeon(Map, WINDOW *);
+void update_datalog(string, WINDOW * datalog);
+void GameLoop(Character, Map, WINDOW * &, WINDOW * &, WINDOW * &);
+//Game Initialization
+void MainGameInit()
+{
+  clear(); //clear the menu
+  int height, width;
+  height = 10;
+  width = 20;
+  //Init three panel
+  WINDOW * stats = newwin(height+2,10,0,0);
+  box(stats, 0, 0);
+  WINDOW * dungeon = newwin(height+2,width+2,0,10);
+  box(dungeon, 0, 0);
+  //used to display game event message e.g. level up, ambushed by monster
+  WINDOW * datalog = newwin(4, 10+width+2, height+2, 0);
+  box(datalog, 0, 0);
+  //Init character
+  Character p('@');
+  Map m(height, width, p.flr);
+  m.generate();
+  //generate map objects
 
-#include <iostream>
-#include "../include/main_game.h"
-#include "../include/display.h"
-#include "../include/game_object.h"
-
-//****************************** Structures
-
-//****************************** Global Variables
-
-using namespace std;
-
-//****************************** Function prototypes
-
-void MainGameLoop(MapClass *map, PlayerClass *player);
-void move_player(int x, int y);
-bool collision_check();
-
-//****************************** Public Functions
-
-void MainGameInit() {
-
-    MapClass *map = new MapClass();
-    PlayerClass *player = new PlayerClass();
-    
-    MainGameLoop(map, player);
+  //start game
+  GameLoop(p, m, stats, dungeon, datalog);
 
 }
+//--------------------------------------------------------
+void GameLoop(Character p,Map m, WINDOW * & stats, WINDOW * & dungeon,
+WINDOW * & datalog)
+{
+  refresh();
+  update_stats(p, stats);
+  update_dungeon(m, dungeon);
+  update_datalog("", datalog);
+  //display everything
+  while(true)
+  {
+    int input = wgetch(dungeon);
 
-//****************************** Private Functions
-
-void MainGameLoop(MapClass *map, PlayerClass *player) {
-    bool end_game = 0;
-
-    while (!end_game) {
-        int inp;
-
-        //Display map
-
-        //control input
-    
-        switch (inp) {
-            case 1:
-                //save_game
-                break;    
-            case 2:
-                move_player(0,1);
-                break;
-        }
-
-        //check end game
-    }
+  }
+  Gameover();
 }
-
-void move_player(int x, int y) {
-
-    //collision check
-    if (collision_check()) {
-        //pre-move action
-    }
-    else {
-        //post-move action
-    }
+//-------------------------------------------------------
+void update_stats(Character p, WINDOW * stats)
+{
+  wclear(stats);
+  box(stats, 0, 0);
+  mvwprintw(stats, 1, 1, "Floor %d", p.flr);
+  mvwprintw(stats, 3, 1, "Level %d", p.lv);
+  mvwprintw(stats, 5, 1, "Exp %d", p.expr);
+  mvwprintw(stats, 7, 1, "Hp %d/%d", p.hp, p.max_hp);
+  mvwprintw(stats, 9, 1, "Score:");
+  mvwprintw(stats, 10, 1, "%d", p.score);
+  wrefresh(stats);
 }
-
-bool collision_check() {
-    return (0);
+//--------------------------------------------------------
+void update_dungeon(Map m, WINDOW * dungeon)
+{
+  wclear(dungeon);
+  box(dungeon, 0, 0);
+  mvwprintw(dungeon, 1, 1, "%c", m.map[0][1][1]);
+  for (int i=0;i<m.height;i++) //I don't know why m.height and m.width don't work
+  {
+    for (int j=0;j<m.width;j++)
+    {
+      if (m.map[0][i][j] != ' ')
+        mvwprintw(dungeon, i+1, j+1, "%c", m.map[0][i][j]);
+      else if (m.map[1][i][j] != ' ')
+        mvwprintw(dungeon, i+1, j+1, "%c", m.map[1][i][j]);
+      else
+        mvwprintw(dungeon, i+1, j+1, "%c", m.map[2][i][j]);
+    }
+  }
+  wrefresh(dungeon);
+}
+//--------------------------------------------------------
+void update_datalog(string message, WINDOW * datalog)
+{
+  wclear(datalog);
+  box(datalog, 0, 0);
+  mvwprintw(datalog, 1, 1, message.c_str());
+  wrefresh(datalog);
+}
+//----------------------------------------------------------
+void Gameover()
+{
+  clear();
+  MainMenuInit();
 }

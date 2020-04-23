@@ -1,8 +1,7 @@
-//Header file for menu
+#ifndef MENU_H
+#define MENU_H
 
-#ifndef MENU_H_
-#define MENU_H_
+//Show main menu
+void MainMenuInit();
 
-void MainMenuInit();    //Show main menu
-
-#endif  // MENU_H_
+#endif
