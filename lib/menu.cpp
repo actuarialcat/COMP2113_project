@@ -1,4 +1,5 @@
-#include <ncurses.h>
+#include <iostream>
+#include <iomanip>
 #include <string>
 
 #include "../include/main_game.h"
@@ -8,8 +9,8 @@ using namespace std;
 /////////////////////////////////////////////
 //Private functions declaration
 
-void InitMenuDisplay(WINDOW *&menu);
-int NavigateMenu(WINDOW *menu);
+void MenuDisplay(int highlight);
+int NavigateMenu();
 void MenuOption(int option);
 
 
@@ -18,46 +19,31 @@ void MenuOption(int option);
 
 void MainMenuInit() {
   int menu_input;
-  WINDOW *menu;
-
-  //init config manu display
-  InitMenuDisplay(menu);
-  
   //Get GUI user input
-  menu_input = NavigateMenu(menu);
-  
+  menu_input = NavigateMenu();
   //Execute cooresponding input
   MenuOption(menu_input);
-
-
-  //testing notes
-  mvwprintw(menu, 7+1, 1, "Program end");
-  wgetch(menu);
 }
 
 
 /////////////////////////////////////////////
 //Private functions
 
-void InitMenuDisplay(WINDOW *&menu) {
-
-  menu = newwin(10,22,0,0);
-  
-  //create window for menu
-  box(menu, 0, 0);
-  refresh();
-  wrefresh(menu);
-
-  //enable arrow keys
-  keypad(menu, true);
-}
-
-
-int NavigateMenu(WINDOW *menu) {
-  int input;
-  int highlight = 1;
-
-  string options[7] =
+void MenuDisplay(int highlight){
+  //clear screen
+  for (int i=0;i<30;i++){
+    cout << endl;
+  }
+  //set width and height
+  const int height = 9;
+  const int width = 30;
+  //print upper border
+  for (int i=0;i<width+2;i++){
+    cout << "-";
+  }
+  cout << endl;
+  //print content
+  string options[9] =
   {
     "Minesweeper Dungeon",
     "1) New game",
@@ -65,44 +51,51 @@ int NavigateMenu(WINDOW *menu) {
     "3) Instruction",
     "4) Setting",
     "5) High score",
-    "6) Quit"
+    "6) Quit",
+    "Press w/s to scroll up/down",
+    "Press y to confirm option"
   };
-  
-  //menu loop
-  while (input != 10){    //NOT press ENTER
-
-    for (int i=0;i<7;i++) { //print menu
-      if (i == highlight) {
-        wattron(menu, A_REVERSE); //highlight current option
-      }
-
-      mvwprintw(menu, i+1, 1, options[i].c_str());
-      wattroff(menu, A_REVERSE);
-
+  cout << left;
+  for (int i=0;i<height;i++){
+    cout << "|";
+    if (i == highlight){
+      cout << setw(width) << options[i] + "<--";
+    } else {
+      cout << setw(width) << options[i];
     }
-
-    wrefresh(menu); //update menu
-    input = wgetch(menu);
-
-    switch(input) {
-      case KEY_UP:
-        highlight--;
-        if (highlight == 0) //cycle
-          highlight = 6;
-        break;
-
-      case KEY_DOWN:
-        highlight++;
-        if (highlight == 7) //cycle
-          highlight = 1;
-        break;
-
-      default:
-        break;
-    }
-    
+    cout << "|" << endl;
   }
+  //print lower border
+  for (int i=0;i<width+2;i++){
+    cout << "-";
+  }
+  cout << endl;
+}
 
+
+int NavigateMenu() {
+  char input;
+  int highlight = 1;
+  //menu loop
+  MenuDisplay(highlight);
+  cin >> input;
+  while (input != 'y'){ //replace ENTER
+    if (input == 'w'){
+      if (highlight == 1){
+        highlight = 6;
+      } else {
+        highlight--;
+      }
+    } else if (input == 's'){
+      if (highlight == 6){
+        highlight = 1;
+      } else {
+        highlight++;
+      }
+    }
+    MenuDisplay(highlight);
+    cin >> input;
+  }
   return highlight;
 }
 
@@ -135,5 +128,3 @@ void MenuOption(int option) {
   }
 
 }
-
-

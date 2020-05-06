@@ -14,6 +14,7 @@ Map::Map(int h, int w, int flr)
   height = h;
   width = w;
   floor = flr;
+  num_of_enemy = h*w*0.2 + flr*5; //depending on floor? Yup!
 
   //common pointer for deuplicative static objects
   wall_ptr = new ObjectWall('W');
@@ -28,7 +29,7 @@ Map::Map(int h, int w, int flr)
 
 
   //Generate each layer
-  int num_of_enemy = 40; //depending on floor?
+
 
   placeEnemyRandom(num_of_enemy);
   generateNumberLayer();
@@ -45,13 +46,13 @@ void Map::placeEnemyRandom(int num_of_enemy){
   while(num_of_enemy > 0) {
     int randy = rand() % height;
     int randx = rand() % width;
-    
+
     if (object_layer[randy][randx] == floor_ptr) {
       object_layer[randy][randx] = new ObjectEnemy('E', 10);
       num_of_enemy--;
     }
   }
-  
+
 }
 
 

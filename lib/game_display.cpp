@@ -1,98 +1,66 @@
-#include <ncurses.h>
+#include <iostream>
 #include <string>
+#include <iomanip>
+using namespace std;
 
 #include "../include/Character.h"
 #include "../include/Map.h"
 #include "../include/game_object.h"
-
+#include "../include/game_display.h"
 /////////////////////////////////////////////
-//Private functions declaration
-
-void update_stats(Character p, WINDOW *stats);
-void update_dungeon(Character p, Map m, WINDOW *dungeon);
-void update_datalog(string message, WINDOW *datalog);
-
-
+void print_dungeon(Character p, Map m);
+void print_stats(Character p, Map m);
 /////////////////////////////////////////////
-//Public Functions
-
-//Initilize
-void InitGameDisplay(WINDOW *&stats, WINDOW *&dungeon, WINDOW *&datalog, 
-    int height, int width){
-
-  //clear the menu
-  clear();
-
-  //Init three panel
-  stats = newwin(height+2,10,0,0);
-  box(stats, 0, 0);
-
-  dungeon = newwin(height+2,width+2,0,10);
-  box(dungeon, 0, 0);
-
-    //used to display game event message e.g. level up, ambushed by monster
-  datalog = newwin(4, 10+width+2, height+2, 0); 
-  box(datalog, 0, 0);
-
-}
-
-
-//Update display
-void update_all_display(Character p, Map m, string message, WINDOW *stats, WINDOW *dungeon, 
-    WINDOW *datalog) {
-  refresh();
-  update_stats(p, stats);
-  update_dungeon(p, m, dungeon);
-  update_datalog(message, datalog);
-
-}
-
-
-/////////////////////////////////////////////
-//Private functions
-
-void update_stats(Character p, WINDOW *stats)
-{
-  wclear(stats);
-  box(stats, 0, 0);
-  mvwprintw(stats, 1, 1, "Floor %d", p.flr);
-  mvwprintw(stats, 3, 1, "Level %d", p.lv);
-  mvwprintw(stats, 5, 1, "Exp %d", p.expr);
-  mvwprintw(stats, 7, 1, "Hp %d/%d", p.hp, p.max_hp);
-  mvwprintw(stats, 9, 1, "Score:");
-  mvwprintw(stats, 10, 1, "%d", p.score);
-  wrefresh(stats);
-}
-
-void update_dungeon(Character p, Map m, WINDOW *dungeon)
-{
-  wclear(dungeon);
-  box(dungeon, 0, 0);
-
-  //display map
-  for (int i=0; i<m.height; i++) //I don't know why m.height and m.width don't work
-  {
-    for (int j=0; j<m.width; j++)
-    {
-      if (m.discovery_layer[i][j] != ' ')
-        mvwprintw(dungeon, i+1, j+1, "%c", m.discovery_layer[i][j]);
-      else if (m.object_layer[i][j]->getDisplayChar() != ' ')
-        mvwprintw(dungeon, i+1, j+1, "%c", m.object_layer[i][j]->getDisplayChar());
-      else
-        mvwprintw(dungeon, i+1, j+1, "%c", m.number_layer[i][j]);
-    }
+void GameDisplay(Character p, Map m, string *message){
+  //clear screen
+  for (int i=0;i<50;i++){
+    cout << endl;
   }
-
-  //display player
-  mvwprintw(dungeon, p.y+1, p.x+1, "%c", p.symbol);
-
-  wrefresh(dungeon);
+  //print dungeon
+  print_dungeon(p, m);
+  //print message
+  cout << message[0] << endl;
+  cout << message[1] << endl;
+  //print stats
+  print_stats(p, m);
+}
+void print_dungeon(Character p, Map m){
+  //upper border of map
+  for (int i=0;i<m.width+2;i++){
+    cout << "-";
+  }
+  cout << endl;
+  //content of the map
+  for (int i=0;i<m.height;i++){
+    cout << "|";
+    for (int j=0;j<m.width;j++){
+      //display player
+      if (i == p.y && j == p.x){
+        cout << p.symbol;
+      } else {
+        //displayer std::map<key, value> map;
+        if (m.discovery_layer[i][j] != ' '){
+          cout << m.discovery_layer[i][j];
+        } else if (m.object_layer[i][j]->getDisplayChar() != ' '){
+          cout << m.object_layer[i][j]->getDisplayChar();
+        } else {
+          cout << m.number_layer[i][j];
+        }
+      }
+    }
+    cout << "|" << endl;
+  }
+  //lower border of map
+  for (int i=0;i<m.width+2;i++){
+    cout << "-";
+  }
+  cout << endl;
 }
 
-void update_datalog(string message, WINDOW *datalog)
-{
-  wclear(datalog);
-  box(datalog, 0, 0);
-  mvwprintw(datalog, 1, 1, message.c_str());
-  wrefresh(datalog);
+void print_stats(Character p, Map m){
+  cout << "Floor " << p.flr << endl;
+  cout << "Enemies left: " << m.num_of_enemy << endl;
+  cout << "Hp " << p.hp << "/" << p.max_hp << endl;
+  cout << "Exp " << p.expr << endl;
+  cout << "Score " << p.score << endl;
 }

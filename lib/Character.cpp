@@ -6,8 +6,8 @@ Character::Character(char sym){
   expr = 100;
   max_hp = 30;
   hp = 30;
-  y = 1;
-  x = 1;
+  y = 0;
+  x = 0;
   flr = 1;
   score = 0;
 }

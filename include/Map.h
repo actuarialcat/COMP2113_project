@@ -14,7 +14,7 @@ class Map
 public:
   //variable
   int height, width, floor;
-
+  int num_of_enemy;
   /*
   Init 3 layers 2d map
   upper layer: ? layer
