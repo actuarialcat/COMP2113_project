@@ -4,10 +4,11 @@ Sweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a treasur
 Player start on 1st floor with 30 health. Everytime you enter a new floor, every tile except your starting location will be "?". Unlike traditional minsweeper game where you can click any tile you wish, treasure seeker doesn't have the ability of teleport. You can only reveal and move to the 4 tiles next your current position by pressing up, down, left and right key. Whenever you reveal a "?" tile, there are three basic possible outcome:  
 
 1)empty tile: nothing will happen  
-2)monster tile: a monster will appear on the tile that you must press the key one more time to combat with, then you will lose health  
-3)items tile: an items (e.g. gold, potion, treasure box) will appear on the tile, you can press the key one more time to obtain it  
+2)monster tile: The monster on that tile will ambush you, result in losing hp 
+3)items tile: an items (e.g. gem, potion, treasure chest) will appear on the tile, press the same key again to obtain it  
 
 After a tile become an empty tile, a number ranged from 0 to 8 will appear on the tile to indicate the number of surroundings' enemies. Player can only move to a number tile.  
+
 ## Features
 ### Player attribute
 int max_hp; //maximum hp you can have  
