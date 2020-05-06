@@ -52,7 +52,8 @@ Unlock after the first time finish the normal mode. In this mode, every floor wi
 Player will gain or lose score when they achieve certain progress in the game. It means to let player challenge themselves for getting the highest score possible.  
 1) reveal a tile: +1  
 2) encounter monster: -10  
-3) get a treasure: +10  
-4) pass a floor: +20  
+3) get 't': +10
+4) get 'T': +25
+4) pass a floor: +100  
 5) get the ultimate treasure: +1000  
-6) each hp and gold remained:+1  
+6) each hp remained: +5  
