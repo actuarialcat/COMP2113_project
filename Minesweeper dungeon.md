@@ -10,27 +10,21 @@ Player start on 1st floor with 30 health. Everytime you enter a new floor, every
 After a tile become an empty tile, a number ranged from 0 to 8 will appear on the tile to indicate the number of surroundings' enemies. Player can only move to a number tile.  
 ## Features
 ### Player attribute
-int level; //increases hp and max_hp when level up  
 int max_hp; //maximum hp you can have  
 int hp; //gameover when health reduced to 0  
-int floor, x, y; //position of player in the dungeon  
-int gold; //amount of gold you have  
-int exp; //experience needed to level up, gain experience from revealing tile  
-int inventory[]; //an array to store your treasures  
+int x, y; //position of player in the dungeon  
+int score; //get as much score as possible
 ### Encounters
-'E' //lose health when encounters, amount of health loss will be calculating by throwing m n-face dice such the the damage is normally distributed  
-'p' //healing potion, heal for a small percentage of max_hp  
-'t' //treasure chest, get a random treasures, one treasure chest on every floor, passive treasure on odd floor, active treasure on even floor  
-'g' //gold, get a random amount of gold, 3-5 piles per floor  
-'M' //Always one merchant on each floor normally, when encounters, below message will be display:  
-1)heal (?? gold)  //heal for decent percentage of health, ??gold because not decided yet  
-2)random treasure 1 (?? gold)  
-3)random treasure 2 (?? gold) 
-### Map features
-'W' //impassible wall, surrounding the floor, no number reveal
-'\*' //impassible void, randomly generated on the floor with no number reveal (need path finder function to make sure every other tile is reachable)  
+'E' //Monster, lose hp when encounter  
+'p' //lesser healing potion, heal for a small percentage of _hp  
+'P' //greater healing potion, heal for a larger percentage of hp  
+'g' //lesser health gem, increase max_hp by 5  
+'G' //greater health gem, increase max_hp by 10  
+'t' //mini treasure chest, gain a small amount of score  
+'T' //treasure chest, gain a large amount of score  
 'U' //stair up to the next floor, randomly generated one per each floor  
-### Teasures
+
+### Teasures (forget about this)
 For treasures and doom mode events, we will eventually design more of them in the future. Their name will be designed in the future as well.
 Before the game, player can choose from 3 starting treasure:  
 1) heal for 10% of max_hp everytime you enter a new floor  
