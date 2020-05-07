@@ -136,18 +136,21 @@ void print_high_score(){
   for (int i=0;i<50;i++){
     cout << endl;
   }
+  cout << "//Highscores//" << endl;
   //open Highscore.txt
   ifstream fin("Highscore.txt");
   if (fin.fail()){exit(1);}
-  string score;
+  string name, score;
   int i = 0;
   //some fake values written mannually for testing
-  while (fin >> score){
+  while (fin >> name){
     i++;
-    cout << to_string(i) << ") " << score << endl;
+    cout << to_string(i) << ") " << left << setw(8) << name;
+    fin >> score;
+    cout << right << setw(8) << score << endl;
   }
   fin.close();
-  cout << "Press any key to Menu." << endl;
+  cout << "Press any key to go back to the main menu." << endl;
   char input;
   cin >> input;
   MainMenuInit();

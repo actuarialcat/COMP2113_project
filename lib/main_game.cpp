@@ -2,6 +2,10 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <fstream>
+#include <map>
+#include <vector>
+#include <bits/stdc++.h>
 
 #include "../include/menu.h"
 #include "../include/Character.h"
@@ -27,7 +31,7 @@ int Dice(int floor);
 
 
 //Manu Logic
-void Gameover();
+void Gameover(int final_score);
 
 
 /////////////////////////////////////////////
@@ -63,7 +67,7 @@ void MainGameInit(){
   GameLoop(p, m, message);
 
   //End game
-  Gameover();
+  Gameover(p.score);
   m.deleteAll();
 }
 
@@ -185,12 +189,46 @@ int MoveInput(int &move_target_x, int &move_target_y) {
 /////////////////////////////////////////////
 //Manu Logic
 
-void Gameover()
+void Gameover(int final_score)
 {
+  //Gameove message
   cout << "Gameover" << endl;
-  cout << "Press any key to go back to menu" << endl;
+  cout << "Your final score is " << final_score << endl;
+  cout << "Please input for name: (no more than 8 characters)" << endl;
+  string this_game_name;
+  cin >> this_game_name;
+  //create a dictionary
+  map<int, string> leaderboard;
+  leaderboard[final_score] = this_game_name;
+  vector<int> list_of_score;
+  list_of_score.push_back(final_score);
+  //get data from Highscore.txt
+  ifstream fin("Highscore.txt");
+  if (fin.fail()){exit(1);}
+
+  string name;
+  int score;
+  while (fin >> name){
+    fin >> score;
+    leaderboard[score] = name;
+    list_of_score.push_back(score);
+  }
+  fin.close();
+  //sort list_of_score in descending order
+  sort(list_of_score.begin(), list_of_score.end(), greater<int>());
+  //rewrite Highscore.txt
+  ofstream fout("Highscore.txt");
+  if (fout.fail()){exit(1);}
+  for (int i=0;i<list_of_score.size();i++){
+    //only store the best 10 records
+    if (i < 10){
+      fout << leaderboard[list_of_score[i]] << " " << list_of_score[i] << endl;
+    }
+  }
+  fout.close();
+  //Back to Main Menu
+  cout << "Press any key to go back to Main Menu." << endl;
   char input;
   cin >> input;
   MainMenuInit();
 }
-
