@@ -11,6 +11,7 @@ public:
   int max_hp, hp;
   int y, x;
   int score;
+  int num_of_enemy;
 
   //Constructer
   Character(char sym);

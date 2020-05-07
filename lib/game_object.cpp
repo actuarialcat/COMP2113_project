@@ -82,11 +82,10 @@ bool ObjectEnemy::collisionCheck(Character &player, std::string message[]){
 }
 
 bool ObjectEnemy::postMoveAction(Character &player, std::string message[]){
-  if (hp > 0){
-    direct_combat(player, hp, lvl, message);
-    display_char = ' ';
-  }
-  return false;
+  direct_combat(player, hp, lvl, message);
+
+  player.num_of_enemy--;
+  return true;
 }
 
 //---------------------------------------------
