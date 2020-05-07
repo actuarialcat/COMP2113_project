@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <fstream>
 
 #include "../include/main_game.h"
 
@@ -12,6 +13,7 @@ using namespace std;
 void MenuDisplay(int highlight);
 int NavigateMenu();
 void MenuOption(int option);
+void print_high_score();
 
 
 /////////////////////////////////////////////
@@ -119,7 +121,7 @@ void MenuOption(int option) {
       break;
 
     case 5:
-      //print_high_score();
+      print_high_score();
       break;
 
     case 6:
@@ -127,4 +129,29 @@ void MenuOption(int option) {
 
   }
 
+}
+
+void print_high_score(){
+  //clear screen
+  for (int i=0;i<50;i++){
+    cout << endl;
+  }
+  cout << "//Highscores//" << endl;
+  //open Highscore.txt
+  ifstream fin("Highscore.txt");
+  if (fin.fail()){exit(1);}
+  string name, score;
+  int i = 0;
+  //some fake values written mannually for testing
+  while (fin >> name){
+    i++;
+    cout << to_string(i) << ") " << left << setw(8) << name;
+    fin >> score;
+    cout << right << setw(8) << score << endl;
+  }
+  fin.close();
+  cout << "Press any key to go back to the main menu." << endl;
+  char input;
+  cin >> input;
+  MainMenuInit();
 }
