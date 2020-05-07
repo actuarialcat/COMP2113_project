@@ -15,4 +15,5 @@ Character::Character(char sym){
   x = rand() % 20;
   flr = 1;
   score = 0;
+  num_of_enemy = 0;
 }

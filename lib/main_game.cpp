@@ -26,13 +26,10 @@ void reveal_map(Character &p, Map &m, int move_target_x, int move_target_y);
 
 int MoveInput(int &move_target_x, int &move_target_y);
 
-//void LogicStage(Character &p, Map &m, string message[], char move);
-int Dice(int floor);
-
-
 //Manu Logic
 void Gameover(int final_score);
 
+void test_mode(Character &p, Map &m);
 
 /////////////////////////////////////////////
 
@@ -51,7 +48,7 @@ void MainGameInit(){
   cout << "there are more than 3 enemies in the surroundings)" << endl;
   char doom_mode;
   cin >> doom_mode;
-  
+
   //init map size
   int height, width;
   height = 10;
@@ -62,6 +59,7 @@ void MainGameInit(){
 
   //Init Map
   Map m(height, width, p.flr, doom_mode);
+  p.num_of_enemy = m.num_of_enemy;
   reveal_starting_map(p, m);
 
   //Init message
@@ -80,6 +78,8 @@ void MainGameInit(){
   //End game
   Gameover(p.score);
   m.deleteAll();
+
+  MainMenuInit();
 }
 
 //--------------------------------------------
@@ -118,26 +118,32 @@ void GameLoop(Character &p, Map &m, string message[]){
     GameDisplay(p, m, message);
 
     //control input
-    int x = MoveInput(move_target_x, move_target_y);
+    int code = MoveInput(move_target_x, move_target_y);
 
-    if (check_boundary_condition(move_target_x, move_target_y, m)) {
-      reveal_map(p, m, move_target_x, move_target_y);
+    if(code == 0){
+      if (check_boundary_condition(move_target_x, move_target_y, m)) {
+        reveal_map(p, m, move_target_x, move_target_y);
 
-      //collision check and pre-move interaction
-      if( m.object_layer[move_target_y][move_target_x]->collisionCheck(p, message) ){
-        p.y = move_target_y;    //moving
-        p.x = move_target_x;
+        //collision check and pre-move interaction
+        if( m.object_layer[move_target_y][move_target_x]->collisionCheck(p, message) ){
+          p.y = move_target_y;    //moving
+          p.x = move_target_x;
 
-        if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
-          m.removeMapObject(p.x, p.y);
+          if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
+            m.removeMapObject(p.x, p.y);
+          }
         }
       }
+      else {
+        message[0] = "This is the edge of the dungeon.";
+        message[1] = "";
+      }
     }
-    else {
-      message[0] = "This is the edge of the dungeon.";
-      message[1] = "";
+    else if (code == 1){
+        test_mode(p, m);
     }
   }
+
 
 }
 
@@ -161,6 +167,7 @@ void reveal_map(Character &p, Map &m, int dst_x, int dst_y){
 int MoveInput(int &move_target_x, int &move_target_y) {
   bool valid;
   char input;
+  int code = 0;
 
   while(!valid){
     std::cin >> input;
@@ -183,6 +190,10 @@ int MoveInput(int &move_target_x, int &move_target_y) {
         move_target_x++;
         break;
 
+      case '@':
+        code = 1;   //test mode
+        break;
+
       /*call game pause manu;
       case :
         break;
@@ -193,8 +204,51 @@ int MoveInput(int &move_target_x, int &move_target_y) {
     }
   }
 
-  return input;
+  return code;
 }
+
+/////////////////////////////////////////////
+
+void test_mode(Character &p, Map &m){
+  string inp;
+  int arg = 0;
+
+  std::cin >> inp;
+  if(inp != "reveal"){ std::cin >> arg; }
+
+  if(inp == "reveal"){
+    for (int i = 0; i < m.height; i++) {
+      for (int j = 0; j < m.width; j++) {
+        m.discovery_layer[i][j] = ' ';
+      }
+    }
+  }
+  else if(inp == "lvl"){
+    p.lv = arg;
+  }
+  else if(inp == "expr"){
+    p.expr = arg;
+  }
+  else if(inp == "max_hp"){
+    p.max_hp = arg;
+  }
+  else if(inp == "hp"){
+   p.hp = arg;
+  }
+  else if(inp == "x"){
+    p.x = arg;
+  }
+  else if(inp == "y"){
+    p.y = arg;
+  }
+  else if(inp == "floor"){
+    p.flr = arg;
+  }
+  else if(inp == "score"){
+    p.score = arg;
+  }
+}
+
 
 
 /////////////////////////////////////////////
@@ -241,5 +295,4 @@ void Gameover(int final_score)
   cout << "Press any key to go back to Main Menu." << endl;
   char input;
   cin >> input;
-  MainMenuInit();
 }
