@@ -144,7 +144,7 @@ ObjectPotion::ObjectPotion(char display_symbol, int init_size)
   size = init_size;
   
   perc_heal = (size == 1) ? 0.5 : 1;    //size 1=small, 2=large
-  hidden = false;
+  hidden = true;
 }
 
 bool ObjectPotion::collisionCheck(Character &player, std::string message[]){
@@ -199,9 +199,59 @@ void ObjectPotion::replanish_hp(Character &p, std::string message[]) {
 }
 
 /////////////////////////////////////////////
-//ObjectPotion
+//ObjectHealthGem
 
+ObjectHealthGem::ObjectHealthGem(char display_symbol, int init_size) 
+: GameObjectBase(display_symbol)
+{  
+  size = init_size;
+  
+  hp_increase = (size == 1) ? 5 : 10;    //size 1=small, 2=large
+  hidden = true;
+}
 
+bool ObjectHealthGem::collisionCheck(Character &player, std::string message[]){
+  if (hidden){
+    reveal(message);
+    hidden = false;
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+void ObjectHealthGem::postMoveAction(Character &player, std::string message[]){
+  addMaxHP(player, message);
+}
+
+//---------------------------------------------
+
+void ObjectHealthGem::reveal(std::string message[]) {
+
+  string message_0 = "You found a ";
+  message_0.append((size == 1) ? "small" : "large");
+  message_0.append(" health gem.");
+  message[0] = message_0;
+
+  message[1] = "";
+}
+
+void ObjectHealthGem::addMaxHP(Character &p, std::string message[]) {
+
+  p.max_hp = p.max_hp + hp_increase;
+  p.hp = p.hp + hp_increase;
+
+  string message_0 = "You used a ";
+  message_0.append((size == 1) ? "small" : "large");
+  message_0.append(" health gem.");
+  message[0] = message_0;
+
+  string message_1 = "Your max HP is increase by ";
+  message_1.append(to_string(hp_increase));
+  message_1.append(" hp.");
+  message[1] = message_1;
+}
 
 
 

@@ -18,6 +18,8 @@ Map::Map(int h, int w, int flr)
   
   const int num_large_potion = 5;
   const int num_small_potion = 5;
+  const int num_large_gem = 5;
+  const int num_small_gem = 5;
 
   //common pointer for deuplicative static objects
   wall_ptr = new ObjectWall('W');
@@ -35,6 +37,8 @@ Map::Map(int h, int w, int flr)
   srand(time(NULL)); 
   placeEnemyRandom(num_of_enemy, floor);
   placePotion(num_large_potion, num_small_potion);
+  placeHealthGem(num_large_gem, num_small_gem);
+
   generateNumberLayer();
   generateDiscoveryLayer();
 
@@ -80,6 +84,19 @@ void Map::placePotion(int num_large_potion, int num_small_potion){
   }
 }
 
+void Map::placeHealthGem(int num_large_gem, int num_small_gem){
+  int randy, randx;
+
+  for (int i = 0; i < num_large_gem; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectHealthGem('G', 2);
+  }
+
+  for (int i = 0; i < num_small_gem; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectHealthGem('g', 1);
+  }
+}
 
 int Map::findRandom(int &randy, int &randx) {
   int i = 0;
@@ -87,12 +104,13 @@ int Map::findRandom(int &randy, int &randx) {
     randy = rand() % (height);    // no objects in starting area
     randx = rand() % (width);
     i++;
-  } while(randy < 3 && randx < 3 && object_layer[randy][randx] != floor_ptr && i < 10000);
+  } while(((randy < 2 && randx < 2) || object_layer[randy][randx] != floor_ptr) && i < 10000);
 
   if (i == 10000){throw "No free place";}
   return 0;
 }
 
+//---------------------------------------------
 
 void Map::generateNumberLayer(){
   //assign number on the number layer

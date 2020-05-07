@@ -104,6 +104,29 @@ private:
   void replanish_hp(Character &p, std::string message[]);
 };
 
+//---------------------------------------------
+
+class ObjectHealthGem : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectHealthGem(char display_symbol, int init_size);
+
+  //fuctions
+  bool collisionCheck(Character &p, std::string message[]);
+  void postMoveAction(Character &p, std::string message[]);
+
+private:
+  //variables
+  int size;
+  int hp_increase;
+  bool hidden;
+
+  //fuctions
+  void reveal(std::string message[]);
+  void addMaxHP(Character &p, std::string message[]);
+};
+
 
 
 
