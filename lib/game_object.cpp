@@ -119,7 +119,7 @@ void ObjectEnemy::direct_combat(Character &p, int &hp, int lvl, std::string mess
     message[1] = message_1;
   }
   else {
-    message[1] = "You died";
+    message[1] = "You run out of hp and have to leave the dungeon.";
   }
 
   hp = 0;

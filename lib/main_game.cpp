@@ -75,6 +75,7 @@ void MainGameInit(){
   //start game
   GameLoop(p, m, message);
 
+
   //End game
   Gameover(p.score);
   m.deleteAll();
@@ -302,8 +303,8 @@ void test_mode(Character &p, Map &m){
 
 void Gameover(int final_score)
 {
-  //Gameove message
-  cout << "Gameover" << endl;
+  //Gameover message
+  cout << "Gameover, you run out of hp and have to leave the dungeon." << endl;
   cout << "Your final score is " << final_score << endl;
   cout << "Please input for name: (no more than 8 characters)" << endl;
   string this_game_name;
