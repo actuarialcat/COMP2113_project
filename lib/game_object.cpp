@@ -66,7 +66,7 @@ ObjectEnemy::ObjectEnemy(char display_symbol, int init_lvl)
 {
   lvl = init_lvl;
 
-  hp = 10 * lvl;
+  hp = Dice(lvl) / 2; //lose half the ambush damage
   ambush = true;
 }
 
@@ -84,7 +84,7 @@ bool ObjectEnemy::collisionCheck(Character &player, std::string message[]){
 bool ObjectEnemy::postMoveAction(Character &player, std::string message[]){
   if (hp > 0){
     direct_combat(player, hp, lvl, message);
-    display_char = 'x';
+    display_char = ' ';
   }
   return false;
 }
@@ -129,7 +129,7 @@ int ObjectEnemy::Dice(int lvl) {
   srand(time(NULL));
   int damage = 3; //base damage
 
-  for (int i=0; i<2; i++) { 
+  for (int i=0; i<2; i++) {
     damage += rand() % lvl + 1;
   }
 
@@ -139,11 +139,11 @@ int ObjectEnemy::Dice(int lvl) {
 /////////////////////////////////////////////
 //ObjectPotion
 
-ObjectPotion::ObjectPotion(char display_symbol, int init_size) 
+ObjectPotion::ObjectPotion(char display_symbol, int init_size)
 : GameObjectBase(display_symbol)
-{  
+{
   size = init_size;
-  
+
   perc_heal = (size == 1) ? 0.5 : 1;    //size 1=small, 2=large
   hidden = true;
 }
@@ -188,7 +188,7 @@ void ObjectPotion::replanish_hp(Character &p, std::string message[]) {
     hp_healed = potent;
     p.hp = p.hp + potent;
   }
-  
+
   string message_0 = "You used a ";
   message_0.append((size == 1) ? "small" : "large");
   message_0.append(" health potion.");
@@ -203,11 +203,11 @@ void ObjectPotion::replanish_hp(Character &p, std::string message[]) {
 /////////////////////////////////////////////
 //ObjectHealthGem
 
-ObjectHealthGem::ObjectHealthGem(char display_symbol, int init_size) 
+ObjectHealthGem::ObjectHealthGem(char display_symbol, int init_size)
 : GameObjectBase(display_symbol)
-{  
+{
   size = init_size;
-  
+
   hp_increase = (size == 1) ? 5 : 10;    //size 1=small, 2=large
   hidden = true;
 }
@@ -259,11 +259,11 @@ void ObjectHealthGem::addMaxHP(Character &p, std::string message[]) {
 /////////////////////////////////////////////
 //ObjectTreasure
 
-ObjectTreasure::ObjectTreasure(char display_symbol, int init_size) 
+ObjectTreasure::ObjectTreasure(char display_symbol, int init_size)
 : GameObjectBase(display_symbol)
-{  
+{
   size = init_size;
-  
+
   score_increase = (size == 1) ? 100 : 500;    //size 1=small, 2=large
   hidden = true;
 }
@@ -310,9 +310,3 @@ void ObjectTreasure::addscore(Character &p, std::string message[]) {
   message_1.append(" score.");
   message[1] = message_1;
 }
-
-
-
-
-
-

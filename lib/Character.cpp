@@ -1,3 +1,6 @@
+#include <ctime>
+#include <cstdlib>
+
 #include "../include/Character.h"
 
 Character::Character(char sym){
@@ -6,8 +9,10 @@ Character::Character(char sym){
   expr = 100;
   max_hp = 100;
   hp = 100;
-  y = 0;
-  x = 0;
+  //randomize starting location
+  srand(time(NULL));
+  y = rand() % 10; //need to modify mannually if we change the map size
+  x = rand() % 20;
   flr = 1;
   score = 0;
 }
