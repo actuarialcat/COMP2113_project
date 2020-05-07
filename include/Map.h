@@ -27,6 +27,7 @@ public:
 
   //functions
   Map(int h, int w, int floor);
+  ~Map();
 
 private:
   //variable

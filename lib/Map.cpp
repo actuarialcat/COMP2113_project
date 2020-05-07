@@ -37,6 +37,19 @@ Map::Map(int h, int w, int flr)
 
 }
 
+Map::~Map() {
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width;j ++) {
+      if(object_layer[i][j] != floor_ptr && object_layer[i][j] != wall_ptr){
+        delete object_layer[i][j];
+      }
+    }
+  }
+
+  delete wall_ptr;
+  delete floor_ptr;
+}
+
 /////////////////////////////////////////////
 
 void Map::placeEnemyRandom(int num_of_enemy, int floor){

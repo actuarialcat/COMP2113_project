@@ -63,7 +63,7 @@ class ObjectEnemy : public GameObjectBase
 {
 public:
   //Constructer
-  ObjectEnemy(char display_symbol, int init_hp);
+  ObjectEnemy(char display_symbol, int init_lvl);
 
   //fuctions
   bool collisionCheck(Character &player, std::string message[]);
@@ -77,11 +77,32 @@ private:
 
   //fuctions
   int Dice(int lvl);
-  void ambush_combat(Character &player, int lvl, std::string message[]);
-  void direct_combat(Character &player, int &hp, int lvl, std::string message[]);
+  void ambush_combat(Character &p, int lvl, std::string message[]);
+  void direct_combat(Character &p, int &hp, int lvl, std::string message[]);
 };
 
+//---------------------------------------------
 
+class ObjectPotion : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectPotion(char display_symbol, int init_size);
+
+  //fuctions
+  bool collisionCheck(Character &p, std::string message[]);
+  void postMoveAction(Character &p, std::string message[]);
+
+private:
+  //variables
+  int size;
+  int perc_heal;
+  bool hidden;
+
+  //fuctions
+  void reveal(std::string message[]);
+  void replanish_hp(Character &p, int perc_heal, std::string message[]);
+};
 
 
 

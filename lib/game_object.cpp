@@ -61,7 +61,6 @@ void ObjectFloor::postMoveAction(Character &player, std::string message[]){
 /////////////////////////////////////////////
 //ObjectEnemy
 
-
 ObjectEnemy::ObjectEnemy(char display_symbol, int init_lvl)
 : GameObjectBase(display_symbol)
 {
@@ -89,6 +88,7 @@ void ObjectEnemy::postMoveAction(Character &player, std::string message[]){
   }
 }
 
+//---------------------------------------------
 
 void ObjectEnemy::ambush_combat(Character &p, int lvl, std::string message[]){
   int damage = Dice(lvl);
@@ -135,7 +135,72 @@ int ObjectEnemy::Dice(int lvl) {
   return damage;
 }
 
+/////////////////////////////////////////////
+//ObjectPotion
+
+ObjectPotion::ObjectPotion(char display_symbol, int init_size) 
+: GameObjectBase(display_symbol)
+{  
+  size = init_size;
+  
+  perc_heal = (size == 1) ? 0.5 : 1;    //size 1=small, 2=large
+  hidden = false;
+}
+
+bool ObjectPotion::collisionCheck(Character &player, std::string message[]){
+  if (hidden){
+    reveal(message);
+    hidden = false;
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+void ObjectPotion::postMoveAction(Character &player, std::string message[]){
+  replanish_hp(player, perc_heal, message);
+}
+
+//---------------------------------------------
+
+void ObjectPotion::reveal(std::string message[]) {
+
+  string message_0 = "You found a ";
+  message_0.append((size == 1) ? "small" : "large");
+  message_0.append(" health potion.");
+  message[0] = message_0;
+
+  message[1] = "";
+}
+
+void ObjectPotion::replanish_hp(Character &p, int perc_heal, std::string message[]) {
+  int hp_healed;
+  int potent = (int)(p.max_hp * perc_heal);
+
+  if (p.hp + potent > p.max_hp) {
+    hp_healed = p.max_hp - p.hp;
+    p.hp = p.max_hp;
+  }
+  else {
+    hp_healed = potent;
+    p.hp = p.hp + potent;
+  }
+  
+  message[0] = "You used a health potion.";
+  string message_1 = "You healed ";
+  message_1.append(to_string(hp_healed));
+  message_1.append(" hp.");
+  message[1] = message_1;
+}
 
 /////////////////////////////////////////////
-//ObjectEnemy
+//ObjectPotion
+
+
+
+
+
+
+
 
