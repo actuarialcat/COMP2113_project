@@ -61,6 +61,10 @@ void MainGameInit(){
 
   //start game
   GameLoop(p, m, message);
+
+  //End game
+  Gameover();
+  m.deleteAll();
 }
 
 //--------------------------------------------
@@ -118,11 +122,8 @@ void GameLoop(Character &p, Map &m, string message[]){
       message[0] = "This is the edge of the dungeon.";
       message[1] = "";
     }
-
-
-
   }
-  Gameover();
+
 }
 
 //---------------------------------------------

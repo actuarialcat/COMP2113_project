@@ -27,8 +27,9 @@ public:
 
   //functions
   Map(int h, int w, int floor);
-  //~Map();
+  ~Map();
   
+  void deleteAll();
   void removeMapObject(int x, int y);
 
 private:

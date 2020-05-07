@@ -1,7 +1,7 @@
 lib = lib/
 src = src/
 inc = include/
-FLAG = -pedantic-errors -std=c++11
+FLAG = -pedantic-errors -std=c++11 -g
 
 #//////////////////////////////
 $(src)game_object.o: $(lib)game_object.cpp $(inc)game_object.h $(inc)Character.h
