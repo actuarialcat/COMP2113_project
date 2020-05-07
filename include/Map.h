@@ -33,7 +33,7 @@ private:
   GameObjectBase *wall_ptr, *floor_ptr;
 
   //functions
-  void placeEnemyRandom(int num_of_enemy);
+  void placeEnemyRandom(int num_of_enemy, int floor);
   void generateNumberLayer();
   void generateDiscoveryLayer();
 

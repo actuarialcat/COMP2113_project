@@ -31,7 +31,7 @@ Map::Map(int h, int w, int flr)
   //Generate each layer
 
 
-  placeEnemyRandom(num_of_enemy);
+  placeEnemyRandom(num_of_enemy, floor);
   generateNumberLayer();
   generateDiscoveryLayer();
 
@@ -39,7 +39,7 @@ Map::Map(int h, int w, int flr)
 
 /////////////////////////////////////////////
 
-void Map::placeEnemyRandom(int num_of_enemy){
+void Map::placeEnemyRandom(int num_of_enemy, int floor){
   srand(time(NULL));
 
   //randomly place enemy
@@ -48,7 +48,7 @@ void Map::placeEnemyRandom(int num_of_enemy){
     int randx = rand() % width;
 
     if (object_layer[randy][randx] == floor_ptr) {
-      object_layer[randy][randx] = new ObjectEnemy('E', 10);
+      object_layer[randy][randx] = new ObjectEnemy('E', floor);
       num_of_enemy--;
     }
   }

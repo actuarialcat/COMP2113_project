@@ -1,6 +1,7 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
+#include <string>
 #include "../include/Character.h"
 
 /////////////////////////////////////////////
@@ -12,8 +13,8 @@ public:
   //fuctions
   char getDisplayChar();
 
-  virtual bool collisionCheck(Character &player);   //True for movable, False for collision
-  virtual void postMoveAction(Character &player);
+  virtual bool collisionCheck(Character &player, std::string message[]);   //True for movable, False for collision
+  virtual void postMoveAction(Character &player, std::string message[]);
 
 protected:
   //Constructer
@@ -35,8 +36,8 @@ public:
   ObjectWall(char display_symbol);
 
   //fuctions
-  bool collisionCheck(Character &player);
-  void postMoveAction(Character &player);
+  bool collisionCheck(Character &player, std::string message[]);
+  void postMoveAction(Character &player, std::string message[]);
 
 };
 
@@ -50,8 +51,8 @@ public:
   ObjectFloor(char display_symbol);
 
   //fuctions
-  bool collisionCheck(Character &player);
-  void postMoveAction(Character &player);
+  bool collisionCheck(Character &player, std::string message[]);
+  void postMoveAction(Character &player, std::string message[]);
 
 };
 
@@ -65,12 +66,14 @@ public:
   ObjectEnemy(char display_symbol, int init_hp);
 
   //fuctions
-  bool collisionCheck(Character &player);
-  void postMoveAction(Character &player);
+  bool collisionCheck(Character &player, std::string message[]);
+  void postMoveAction(Character &player, std::string message[]);
 
 private:
   //variables
   int hp;
+  int lvl;
+  bool ambush;
 
 
 };
