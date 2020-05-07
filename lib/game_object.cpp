@@ -61,10 +61,6 @@ void ObjectFloor::postMoveAction(Character &player, std::string message[]){
 /////////////////////////////////////////////
 //ObjectEnemy
 
-int Dice(int lvl);
-void enemy_ambush_combat(Character &player, int lvl, string message[]);
-void enemy_direct_combat(Character &player, int &hp, int lvl, string message[]);
-
 
 ObjectEnemy::ObjectEnemy(char display_symbol, int init_lvl)
 : GameObjectBase(display_symbol)
@@ -77,7 +73,7 @@ ObjectEnemy::ObjectEnemy(char display_symbol, int init_lvl)
 
 bool ObjectEnemy::collisionCheck(Character &player, std::string message[]){
   if (ambush){
-    enemy_ambush_combat(player, lvl, message);
+    ambush_combat(player, lvl, message);
     ambush = false;
     return false;
   }
@@ -88,13 +84,13 @@ bool ObjectEnemy::collisionCheck(Character &player, std::string message[]){
 
 void ObjectEnemy::postMoveAction(Character &player, std::string message[]){
   if (hp > 0){
-    enemy_direct_combat(player, hp, lvl, message);
+    direct_combat(player, hp, lvl, message);
     display_char = 'x';
   }
 }
 
 
-void enemy_ambush_combat(Character &p, int lvl, string message[]){
+void ObjectEnemy::ambush_combat(Character &p, int lvl, std::string message[]){
   int damage = Dice(lvl);
 
   message[0] = "Ambushed by monster.";
@@ -106,7 +102,7 @@ void enemy_ambush_combat(Character &p, int lvl, string message[]){
   p.hp -= damage;
 }
 
-void enemy_direct_combat(Character &p, int &hp, int lvl, string message[]){
+void ObjectEnemy::direct_combat(Character &p, int &hp, int lvl, std::string message[]){
   int damage = hp;
 
   string message_0 = "You attacked monster with ";
@@ -128,7 +124,7 @@ void enemy_direct_combat(Character &p, int &hp, int lvl, string message[]){
   p.hp -= damage;
 }
 
-int Dice(int lvl) {
+int ObjectEnemy::Dice(int lvl) {
   srand(time(NULL));
   int damage = 3; //base damage
 

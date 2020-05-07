@@ -75,7 +75,10 @@ private:
   int lvl;
   bool ambush;
 
-
+  //fuctions
+  int Dice(int lvl);
+  void ambush_combat(Character &player, int lvl, std::string message[]);
+  void direct_combat(Character &player, int &hp, int lvl, std::string message[]);
 };
 
 
