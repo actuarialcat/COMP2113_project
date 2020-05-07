@@ -5,7 +5,7 @@ Character::Character(char sym){
   lv = 1;
   expr = 100;
   max_hp = 100;
-  hp = 10;
+  hp = 100;
   y = 0;
   x = 0;
   flr = 1;
