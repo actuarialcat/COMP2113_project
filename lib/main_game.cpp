@@ -2,25 +2,30 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <curses.h>
 
 #include "../include/menu.h"
 #include "../include/Character.h"
 #include "../include/Map.h"
 #include "../include/game_display.h"
 
+using namespace std;
+
 /////////////////////////////////////////////
 //private functions declaration
 
-void GameLoop(Character p, Map m, string message[]);
-bool check_not_end_game();
-char InputStage();
-void LogicStage(Character &p, Map &m, string message[], char move);
-int Dice(int floor);
+void reveal_starting_map(Character &p, Map &m);
+bool check_boundary_condition(int x, int y, Map m);
 
+void GameLoop(Character &p, Map &m, string message[]);
+bool check_not_end_game(Character p);
+void reveal_map(Character &p, Map &m, int move_target_x, int move_target_y);
 
-//Manu Logic
+int MoveInput(int &move_target_x, int &move_target_y);
+
 void Gameover();
 
+void test_mode(Character &p, Map &m);
 
 /////////////////////////////////////////////
 
@@ -29,14 +34,17 @@ void Gameover();
 
 //Game Initialization
 void MainGameInit(){
-  int height, width;
-  height = 10;
-  width = 20;
+  const int height = 10;
+  const int width = 20;
+
   //Init character
   Character p('@');
 
   //Init Map
   Map m(height, width, p.flr);
+  p.num_of_enemy = m.num_of_enemy;
+
+  reveal_starting_map(p, m);
 
   //Init message
   /*
@@ -47,113 +55,141 @@ void MainGameInit(){
   */
   string message[2] = {"You entered the 1st floor of the dungeon.",
    "Press w/a/s/d to move"};
-   //reveal map under 3x3 areas of the starting point
-   for (int i=-1;i<=1;i++){
-     for (int j=-1;j<=1;j++){
-       //check boundary condition
-       if (p.y+i >= 0 && p.y+i < m.height &&
-       p.x+j >= 0 && p.x+j < m.width){
-         m.discovery_layer[p.y+i][p.x+j] = ' ';
-       }
-     }
-   }
+
   //start game
   GameLoop(p, m, message);
+
+  //End game
+  Gameover();
+  m.deleteAll();
+}
+
+//--------------------------------------------
+
+void reveal_starting_map(Character &p, Map &m) {
+  for (int i=-1;i<=1;i++){
+    for (int j=-1;j<=1;j++){
+      //check boundary condition
+      if (check_boundary_condition(p.x+j, p.y+i, m)){
+        m.discovery_layer[p.y+i][p.x+j] = ' ';
+      }
+    }
+  }
+}
+
+bool check_boundary_condition(int x, int y, Map m) {
+  if (y >= 0 && y < m.height && x >= 0 && x < m.width){
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 /////////////////////////////////////////////
 //Game Logic
-void GameLoop(Character p, Map m, string message[]){
-  //reasons for ending the current game loop
-  bool died = false;
-  bool upstair = false;
-  bool save_game = false;
-  //display everything
-  GameDisplay(p, m, message);
 
-  //start the actual loop
-  while (true){
-    //Input stage
-    char move = InputStage();
+void GameLoop(Character &p, Map &m, string message[]){
+  int move_target_x, move_target_y;
 
-    //Logic stage
-    LogicStage(p, m, message, move);
+  while(check_not_end_game(p)){
+    move_target_x = p.x;
+    move_target_y = p.y;
 
-    //Gameover determination
-    if (p.hp <= 0){
-      died = true;
-      break;
-    }
-
-    //Display stage
+    //display everything
     GameDisplay(p, m, message);
 
-  }
-  Gameover();
-}
-//--------------------------------------------
-char InputStage(){
-  bool valid = false;
-  char input;
-  while (!valid){
-    cin >> input;
-    if (input == 'w' || input == 'a' || input == 's' || input == 'd'){
-      valid = true;
-    }
-  }
-  return input;
-}
-//--------------------------------------------
-void LogicStage(Character &p, Map &m, string message[], char move){
-  //the supposed destination after moving
-  int dst_y = p.y;
-  int dst_x = p.x;
-  if (move == 'w'){dst_y--;}
-  if (move == 's'){dst_y++;}
-  if (move == 'a'){dst_x--;}
-  if (move == 'd'){dst_x++;}
-  //check boundary condition
-  if (dst_y < 0 || dst_y >= m.height ||
-  dst_x < 0 || dst_x >= m.width){
-    message[0] = "This is the edge of the dungeon.";
-    message[1] = "";
-  } else {
-    //if ?, then reveal tile
-    if (m.discovery_layer[dst_y][dst_x] == '?'){
-      m.discovery_layer[dst_y][dst_x] = ' ';
-      p.score++;
-      if (m.object_layer[dst_y][dst_x]->getDisplayChar() == 'E'){
-        //roll dice to randomize damage
-        int damage = Dice(m.floor);
-        //change message
-        message[0] = "Ambushed by monster.";
-        string message_1 = "You lost ";
-        message_1.append(to_string(damage));
-        message_1.append(" hp.");
-        message[1] = message_1;
-        p.hp -= damage;
+    //control input
+    int code = MoveInput(move_target_x, move_target_y);
+
+    if(code == 0){
+      if (check_boundary_condition(move_target_x, move_target_y, m)) {
+        reveal_map(p, m, move_target_x, move_target_y);
+
+        //collision check and pre-move interaction
+        if( m.object_layer[move_target_y][move_target_x]->collisionCheck(p, message) ){
+          p.y = move_target_y;    //moving
+          p.x = move_target_x;
+
+          if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
+            m.removeMapObject(p.x, p.y);
+          }
+        }
       }
-    } else {
-      //if nothing there, move
-      if (m.object_layer[dst_y][dst_x]->getDisplayChar() == ' '){
-        p.y = dst_y;
-        p.x = dst_x;
-      } else {
-        //react with game objects
+      else {
+        message[0] = "This is the edge of the dungeon.";
+        message[1] = "";
       }
     }
+    else if (code == 1){
+        test_mode(p, m);
+    }
   }
-}
-//--------------------------------------------
-int Dice(int floor){
-  srand(time(NULL));
-  int damage = 3; //base damage
-  for (int i=0;i<2;i++){
-    damage += rand() % floor + 1;
-  }
-  return damage;
+  
 
 }
+
+//---------------------------------------------
+
+bool check_not_end_game(Character p){
+  if (p.hp > 0) {return true; }
+
+  return false;
+}
+
+void reveal_map(Character &p, Map &m, int dst_x, int dst_y){
+  if (m.discovery_layer[dst_y][dst_x] == '?'){
+      m.discovery_layer[dst_y][dst_x] = ' ';
+      p.score++;
+  }
+}
+
+
+//Get user GUI input
+int MoveInput(int &move_target_x, int &move_target_y) {
+  bool valid;
+  char input;
+  int code = 0;
+
+  while(!valid){
+    std::cin >> input;
+
+    valid = true;
+    switch(input) {
+      case 'w':
+        move_target_y--;
+        break;
+
+      case 's':
+        move_target_y++;
+        break;
+
+      case 'a':
+        move_target_x--;
+        break;
+
+      case 'd':
+        move_target_x++;
+        break;
+
+      case '@':
+        code = 1;   //test mode
+        break;
+
+      /*call game pause manu;
+      case :
+        break;
+      */
+      default:
+        valid = false;
+        break;
+    }
+  }
+
+  return code;
+}
+
+
 /////////////////////////////////////////////
 //Manu Logic
 
@@ -165,3 +201,47 @@ void Gameover()
   cin >> input;
   MainMenuInit();
 }
+
+
+/////////////////////////////////////////////
+
+void test_mode(Character &p, Map &m){
+  string inp;
+  int arg = 0;
+
+  std::cin >> inp;
+  if(inp != "reveal"){ std::cin >> arg; }
+
+  if(inp == "reveal"){
+    for (int i = 0; i < m.height; i++) {
+      for (int j = 0; j < m.width; j++) {
+        m.discovery_layer[i][j] = ' ';
+      }
+    }
+  }
+  else if(inp == "lvl"){
+    p.lv = arg;
+  } 
+  else if(inp == "expr"){
+    p.expr = arg;
+  } 
+  else if(inp == "max_hp"){
+    p.max_hp = arg;
+  } 
+  else if(inp == "hp"){
+    p.hp = arg;
+  }
+  else if(inp == "x"){
+    p.x = arg;
+  } 
+  else if(inp == "y"){
+    p.y = arg;
+  } 
+  else if(inp == "floor"){
+    p.flr = arg;
+  } 
+  else if(inp == "score"){
+    p.score = arg;
+  }
+}
+

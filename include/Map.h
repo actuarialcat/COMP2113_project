@@ -27,13 +27,23 @@ public:
 
   //functions
   Map(int h, int w, int floor);
+  ~Map();
+  
+  void deleteAll();
+  void removeMapObject(int x, int y);
 
 private:
   //variable
   GameObjectBase *wall_ptr, *floor_ptr;
 
   //functions
-  void placeEnemyRandom(int num_of_enemy);
+  void placeEnemyRandom(int num_of_enemy, int floor);
+  void placePotion(int num_large_potion, int num_small_potion);
+  void placeHealthGem(int num_large_gem, int num_small_gem);
+  void placeTreasure(int num_large_treasure, int num_small_treasure);
+
+  int findRandom(int &randy, int &randx);
+
   void generateNumberLayer();
   void generateDiscoveryLayer();
 

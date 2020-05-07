@@ -1,6 +1,7 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
+#include <string>
 #include "../include/Character.h"
 
 /////////////////////////////////////////////
@@ -12,8 +13,8 @@ public:
   //fuctions
   char getDisplayChar();
 
-  virtual bool collisionCheck(Character &player);   //True for movable, False for collision
-  virtual void postMoveAction(Character &player);
+  virtual bool collisionCheck(Character &player, std::string message[]);   //True for movable, False for collision
+  virtual bool postMoveAction(Character &player, std::string message[]);   //True for suicide after pass on.
 
 protected:
   //Constructer
@@ -35,8 +36,8 @@ public:
   ObjectWall(char display_symbol);
 
   //fuctions
-  bool collisionCheck(Character &player);
-  void postMoveAction(Character &player);
+  bool collisionCheck(Character &player, std::string message[]);
+  bool postMoveAction(Character &player, std::string message[]);
 
 };
 
@@ -50,8 +51,8 @@ public:
   ObjectFloor(char display_symbol);
 
   //fuctions
-  bool collisionCheck(Character &player);
-  void postMoveAction(Character &player);
+  bool collisionCheck(Character &player, std::string message[]);
+  bool postMoveAction(Character &player, std::string message[]);
 
 };
 
@@ -62,20 +63,92 @@ class ObjectEnemy : public GameObjectBase
 {
 public:
   //Constructer
-  ObjectEnemy(char display_symbol, int init_hp);
+  ObjectEnemy(char display_symbol, int init_lvl);
 
   //fuctions
-  bool collisionCheck(Character &player);
-  void postMoveAction(Character &player);
+  bool collisionCheck(Character &player, std::string message[]);
+  bool postMoveAction(Character &player, std::string message[]);
 
 private:
   //variables
   int hp;
+  int lvl;
+  bool ambush;
 
-
+  //fuctions
+  int Dice(int lvl);
+  void ambush_combat(Character &p, int lvl, std::string message[]);
+  void direct_combat(Character &p, int &hp, int lvl, std::string message[]);
 };
 
+//---------------------------------------------
 
+class ObjectPotion : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectPotion(char display_symbol, int init_size);
+
+  //fuctions
+  bool collisionCheck(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
+
+private:
+  //variables
+  int size;
+  double perc_heal;
+  bool hidden;
+
+  //fuctions
+  void reveal(std::string message[]);
+  void replanish_hp(Character &p, std::string message[]);
+};
+
+//---------------------------------------------
+
+class ObjectHealthGem : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectHealthGem(char display_symbol, int init_size);
+
+  //fuctions
+  bool collisionCheck(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
+
+private:
+  //variables
+  int size;
+  int hp_increase;
+  bool hidden;
+
+  //fuctions
+  void reveal(std::string message[]);
+  void addMaxHP(Character &p, std::string message[]);
+};
+
+//---------------------------------------------
+
+class ObjectTreasure : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectTreasure(char display_symbol, int init_size);
+
+  //fuctions
+  bool collisionCheck(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
+
+private:
+  //variables
+  int size;
+  int score_increase;
+  bool hidden;
+
+  //fuctions
+  void reveal(std::string message[]);
+  void addscore(Character &p, std::string message[]);
+};
 
 
 
