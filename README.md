@@ -4,20 +4,20 @@ COMP 2113 Project for Group 225
 ## Brief identification of the team members
 
 Fong Cheuk Ting, u3035688784  
-Leung Chak Sum, 3035470905
-
+Leung Chak Sum, 3035470905  
+*Important!!! The contribution graph is messed up. Fong Cheuk Ting's contribution should minus 10082 lines.*
 ## Game description
-Sweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a treasure seeker who sneak into a 8 storey dungeon overwhelmed with dangerous monsters to steal the ultimate treasure at the top floor. You have the amazing "minesweeper" ability to sense the presence of surroundings' ememies. Use this power wisely to avoid encountering monsters as much as possible such that you won't run out of stamina before getting the ultimate treasure. There are also mysterious merchants and useful treasures scattered across the dungeon to help you survive till the end.
+Sweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a the most greedy treasure seeker in the world who sneak into a 8 storey dungeon overwhelmed with dangerous monsters to gather as much treasure as possible. You have the amazing "minesweeper" ability to sense the presence of surroundings' ememies. Use this power wisely to avoid encountering monsters as much as possible. There are also special items inside the dungeon which helps you survived longer.
 
-Player start on 1st floor with 30 health. Everytime you enter a new floor, every tile except your starting location will be "?". Unlike traditional minsweeper game where you can click any tile you wish, treasure seeker doesn't have the ability of teleport. You can only reveal and move to the 4 tiles next your current position by pressing up, down, left and right key. Whenever you reveal a "?" tile, there are three basic possible outcome:
+Player start on 1st floor with 30 health. Everytime you enter a new floor, every tile except 3x3 area of your starting location will be "?". Unlike traditional minsweeper game where you can click any tile you wish, treasure seeker doesn't have the ability of teleport. You can only reveal and move to the 4 tiles next your current position by pressing w/a/s/d key. Whenever you reveal a "?" tile, there are three basic possible outcome:
 
 1)empty tile: nothing will happen  
-2)monster tile: a monster immediately ambush you, then you will lose health, you must kill all revealed monsters before stairing up    
-3)items tile: an items (e.g. gold, potion, treasure box) will appear on the tile, you can press the key one more time to obtain it  
+2)monster tile: a monster immediately ambush you, losing decent amount of hp  
+3)items tile: an items (e.g. hp potion, treasure chest) will appear on the tile, you can press the same key again to obtain it  
 
 After a tile become an empty tile, a number ranged from 0 to 8 will appear on the tile to indicate the number of surroundings' enemies. Player can only move to a number tile.
 
-
+Legend has it that the dungeon has infinite floor, your goal is collect as much treasure as possible before running out of hp.  
 ## Requirements Mapping
 The following table show the mapping between our features and coding requirement 1-5.
 
@@ -34,65 +34,36 @@ The following table show the mapping between our features and coding requirement
 ### Menus
 User-friendly menus to navigate the functions of the program. Menu pages include:
 * Main menu
-* Instruction page
-* Settings page
-* High-score page
+* Leaderboard page
 * A hidden test-mode page
 
 ### Main Game
 #### Player attribute
-int level; //increases hp and max_hp when level up  
+
 int max_hp; //maximum hp you can have  
 int hp; //gameover when health reduced to 0  
 int floor, x, y; //position of player in the dungeon  
-int exp; //experience needed to level up, gain experience from revealing tile  
-int inventory[]; //an array to store your treasures  (implement later)  
-
+int score; //Your current score  
 #### Encounters
 'E' //lose health when encounters, amount of health loss will be calculating by throwing m n-face dice such the the damage is normally distributed  
-'p' //healing potion, heal for a small percentage of max_hp  
-'t' //treasure chest, get a random treasures, one treasure chest on every floor, passive treasure on odd floor, active treasure on even floor  (for 
-'g' // pile of gold coin, increase exp and score upon picking up  
-#### Map features
-'W' //impassible wall, surrounding the floor, no number reveal 
-'\*' //impassible void, randomly generated on the floor with no number reveal   
-* fixed: location determined during level design  
-* (Later implemetation) random: need path finder function to make sure every other tile is reachable  
-'U' //stair up to the next floor, randomly generated one per each floor  
+'p' //lesser healing potion, heal for a small percentage of hp  
+'P' //greater healing potion, heal for a large percentage of hp  
+'g' //lesser health gem, increase max_hp by 3  
+'G' //greater health gem, increase max_hp by 6  
+'t' //mini treasure chest, gain a small amount of score
+'T' //treasure chest, gain a large amount of score  
+'U' //staircase to the next floor
 
-#### (Later implementation) Teasures
-For treasures and doom mode events, we will eventually design more of them in the future. Their name will be designed in the future as well.
-Before the game, player can choose from 3 starting treasure:  
-1) heal for 10% of max_hp everytime you enter a new floor  
-2) Press "B" to reveal the 8 tiles around you, destroy all monsters and items on these 8 tile (one use per floor)  
-3) Press "T" to sacrifice one health for one gold (infinite use)  
-Examples of treasures from treasure chests and merchants:  
-1) jump to the next floor (one use only)
-2) double your current max_hp  (repeatable treasure)  
-3) everytime you enter a new floor, reveal 5 random empty tiles  
-4) when receive fatal damage, destroy this treasure and heal to 50% of max_hp  
-5) throw one less dice when calculate the damage  (repeatable treasure)  
-6) merchant will offer 50% discount  
-7) gain one health for every 5 moves  
-
-#### (Later implemetation) Doom mode
-Unlock after the first time finish the normal mode. In this mode, every floor will have a random negative event which make it harder for player to survive. 2 random events on 4th and 8th floor. Examples of negative event:  
-1) 10 extra monsters on the floor  
-2) tiles larger than '2' become '2'  
-3) die instantly when you encounter the third monster  
-4) when calculate damage taken, roll an extra 10 faces die  
-5) tiles smaller than '1' become '1'  
-6) after the 30th move, take 2 damages every move  
-7) lose gold instead of gain gold when picking gold pile, double the number of gold piles on this floor
-8) cannot move to the next floor until there are less than 10 '?' tiles on this floor  
+#### Doom mode
+For player who love challenge, you may choose to activate doom mode at the start of a new game. In this mode, number tile which is supposed to be larger than '3' will become '3'. Making it harder for player to avoid monsters.  
 
 #### Score system
-Player will gain or lose score when they achieve certain progress in the game. It means to let player challenge themselves for getting the highest score possible.  
-1) each exp gained: +1 
-2) get a treasure: +100  
-3) pass a floor: +200  
-4) get the ultimate treasure: +10000  
-5) each hp remained: +10  
+Player will gain or lose score when they achieve certain progress in the game. It means to let player challenge themselves for getting the highest score possible.
+
+1) reveal a tile: +1  
+2) kill a monster: +10  
+3) get a treasure chest: +20/+50  
+4) pass a floor: + 100  
 
 ### High Score
 Save highscore once a game is completed. Sorting algorithm is used here.
