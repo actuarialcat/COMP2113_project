@@ -14,7 +14,10 @@ Map::Map(int h, int w, int flr)
   height = h;
   width = w;
   floor = flr;
-  num_of_enemy = h*w*0.2 + flr*5; //depending on floor? Yup!
+  num_of_enemy = h*w*0.2 + flr*5; //depending on floor
+  
+  const int num_large_potion = 5;
+  const int num_small_potion = 5;
 
   //common pointer for deuplicative static objects
   wall_ptr = new ObjectWall('W');
@@ -29,14 +32,15 @@ Map::Map(int h, int w, int flr)
 
 
   //Generate each layer
-
-
+  srand(time(NULL)); 
   placeEnemyRandom(num_of_enemy, floor);
+  placePotion(num_large_potion, num_small_potion);
   generateNumberLayer();
   generateDiscoveryLayer();
 
 }
 
+/*
 Map::~Map() {
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width;j ++) {
@@ -49,23 +53,44 @@ Map::~Map() {
   delete wall_ptr;
   delete floor_ptr;
 }
+*/
 
 /////////////////////////////////////////////
 
 void Map::placeEnemyRandom(int num_of_enemy, int floor){
-  srand(time(NULL));
+  int randy, randx;
 
-  //randomly place enemy
-  while(num_of_enemy > 0) {
-    int randy = rand() % height;
-    int randx = rand() % width;
+  for (int i = 0; i < num_of_enemy; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectEnemy('E', floor);
+  }
+}
 
-    if (object_layer[randy][randx] == floor_ptr) {
-      object_layer[randy][randx] = new ObjectEnemy('E', floor);
-      num_of_enemy--;
-    }
+void Map::placePotion(int num_large_potion, int num_small_potion){
+  int randy, randx;
+
+  for (int i = 0; i < num_large_potion; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectPotion('P', 2);
   }
 
+  for (int i = 0; i < num_small_potion; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectPotion('p', 1);
+  }
+}
+
+
+int Map::findRandom(int &randy, int &randx) {
+  int i = 0;
+  do{
+    randy = rand() % (height);    // no objects in starting area
+    randx = rand() % (width);
+    i++;
+  } while(randy < 3 && randx < 3 && object_layer[randy][randx] != floor_ptr && i < 10000);
+
+  if (i == 10000){throw "No free place";}
+  return 0;
 }
 
 

@@ -27,7 +27,7 @@ public:
 
   //functions
   Map(int h, int w, int floor);
-  ~Map();
+  //~Map();
 
 private:
   //variable
@@ -35,6 +35,10 @@ private:
 
   //functions
   void placeEnemyRandom(int num_of_enemy, int floor);
+  void placePotion(int num_large_potion, int num_small_potion);
+
+  int findRandom(int &randy, int &randx);
+
   void generateNumberLayer();
   void generateDiscoveryLayer();
 

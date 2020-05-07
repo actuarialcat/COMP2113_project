@@ -96,12 +96,12 @@ public:
 private:
   //variables
   int size;
-  int perc_heal;
+  double perc_heal;
   bool hidden;
 
   //fuctions
   void reveal(std::string message[]);
-  void replanish_hp(Character &p, int perc_heal, std::string message[]);
+  void replanish_hp(Character &p, std::string message[]);
 };
 
 

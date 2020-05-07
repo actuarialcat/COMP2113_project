@@ -159,7 +159,7 @@ bool ObjectPotion::collisionCheck(Character &player, std::string message[]){
 }
 
 void ObjectPotion::postMoveAction(Character &player, std::string message[]){
-  replanish_hp(player, perc_heal, message);
+  replanish_hp(player, message);
 }
 
 //---------------------------------------------
@@ -174,7 +174,7 @@ void ObjectPotion::reveal(std::string message[]) {
   message[1] = "";
 }
 
-void ObjectPotion::replanish_hp(Character &p, int perc_heal, std::string message[]) {
+void ObjectPotion::replanish_hp(Character &p, std::string message[]) {
   int hp_healed;
   int potent = (int)(p.max_hp * perc_heal);
 
@@ -187,7 +187,11 @@ void ObjectPotion::replanish_hp(Character &p, int perc_heal, std::string message
     p.hp = p.hp + potent;
   }
   
-  message[0] = "You used a health potion.";
+  string message_0 = "You used a ";
+  message_0.append((size == 1) ? "small" : "large");
+  message_0.append(" health potion.");
+  message[0] = message_0;
+
   string message_1 = "You healed ";
   message_1.append(to_string(hp_healed));
   message_1.append(" hp.");
