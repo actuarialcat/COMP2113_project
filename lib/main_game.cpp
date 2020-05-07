@@ -195,6 +195,49 @@ int MoveInput(int &move_target_x, int &move_target_y) {
   return code;
 }
 
+/////////////////////////////////////////////
+
+void test_mode(Character &p, Map &m){
+  string inp;
+  int arg = 0;
+
+  std::cin >> inp;
+  if(inp != "reveal"){ std::cin >> arg; }
+
+  if(inp == "reveal"){
+    for (int i = 0; i < m.height; i++) {
+      for (int j = 0; j < m.width; j++) {
+        m.discovery_layer[i][j] = ' ';
+      }
+    }
+  }
+  else if(inp == "lvl"){
+    p.lv = arg;
+  } 
+  else if(inp == "expr"){
+    p.expr = arg;
+  } 
+  else if(inp == "max_hp"){
+    p.max_hp = arg;
+  } 
+  else if(inp == "hp"){
+   p.hp = arg;
+  }
+  else if(inp == "x"){
+    p.x = arg;
+  } 
+  else if(inp == "y"){
+    p.y = arg;
+  } 
+  else if(inp == "floor"){
+    p.flr = arg;
+  } 
+  else if(inp == "score"){
+    p.score = arg;
+  }
+}
+
+
 
 /////////////////////////////////////////////
 //Manu Logic
@@ -241,3 +284,4 @@ void Gameover(int final_score)
   char input;
   cin >> input;
 }
+
