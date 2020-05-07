@@ -72,6 +72,8 @@ ObjectEnemy::ObjectEnemy(char display_symbol, int init_lvl)
 
 bool ObjectEnemy::collisionCheck(Character &player, std::string message[]){
   if (ambush){
+    //counting the hidden enemies left
+    player.num_of_enemy--;
     ambush_combat(player, lvl, message);
     ambush = false;
     return false;

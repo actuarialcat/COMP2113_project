@@ -65,7 +65,7 @@ void print_stats(Character p, Map m){
     cout << "Normal Mode" << endl;
   }
   cout << "Floor " << p.flr << endl;
-  cout << "Enemies left: " << p.num_of_enemy << endl;
+  cout << "Hidden enemies: " << p.num_of_enemy << endl;
   cout << "Hp " << p.hp << "/" << p.max_hp << endl;
   cout << "Exp " << p.expr << endl;
   cout << "Score " << p.score << endl;
