@@ -18,11 +18,11 @@ char GameObjectBase::getDisplayChar() {
 }
 
 bool GameObjectBase::collisionCheck(Character &player, std::string message[]){
-  return 1;
+  return false;
 }
 
-void GameObjectBase::postMoveAction(Character &player, std::string message[]){
-  //do nothing
+bool GameObjectBase::postMoveAction(Character &player, std::string message[]){
+  return false;
 }
 
 
@@ -37,8 +37,8 @@ bool ObjectWall::collisionCheck(Character &player, std::string message[]){
   return false;
 }
 
-void ObjectWall::postMoveAction(Character &player, std::string message[]){
-  //do nothing
+bool ObjectWall::postMoveAction(Character &player, std::string message[]){
+  return false;
 }
 
 
@@ -53,8 +53,8 @@ bool ObjectFloor::collisionCheck(Character &player, std::string message[]){
   return true;
 }
 
-void ObjectFloor::postMoveAction(Character &player, std::string message[]){
-  //do nothing
+bool ObjectFloor::postMoveAction(Character &player, std::string message[]){
+  return false;
 }
 
 
@@ -81,11 +81,12 @@ bool ObjectEnemy::collisionCheck(Character &player, std::string message[]){
   }
 }
 
-void ObjectEnemy::postMoveAction(Character &player, std::string message[]){
+bool ObjectEnemy::postMoveAction(Character &player, std::string message[]){
   if (hp > 0){
     direct_combat(player, hp, lvl, message);
     display_char = 'x';
   }
+  return false;
 }
 
 //---------------------------------------------
@@ -158,8 +159,9 @@ bool ObjectPotion::collisionCheck(Character &player, std::string message[]){
   }
 }
 
-void ObjectPotion::postMoveAction(Character &player, std::string message[]){
+bool ObjectPotion::postMoveAction(Character &player, std::string message[]){
   replanish_hp(player, message);
+  return true;
 }
 
 //---------------------------------------------
@@ -221,8 +223,9 @@ bool ObjectHealthGem::collisionCheck(Character &player, std::string message[]){
   }
 }
 
-void ObjectHealthGem::postMoveAction(Character &player, std::string message[]){
+bool ObjectHealthGem::postMoveAction(Character &player, std::string message[]){
   addMaxHP(player, message);
+  return true;
 }
 
 //---------------------------------------------

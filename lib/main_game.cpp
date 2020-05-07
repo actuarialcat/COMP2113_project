@@ -109,7 +109,9 @@ void GameLoop(Character &p, Map &m, string message[]){
         p.y = move_target_y;    //moving
         p.x = move_target_x;
 
-        m.object_layer[p.y][p.x]->postMoveAction(p, message);   //post move interaction
+        if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
+          m.removeMapObject(p.x, p.y);
+        }
       }
     }
     else {

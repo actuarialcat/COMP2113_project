@@ -59,6 +59,11 @@ Map::~Map() {
 }
 */
 
+void Map::removeMapObject(int x, int y) {
+  object_layer[y][x] = floor_ptr;
+}
+
+
 /////////////////////////////////////////////
 
 void Map::placeEnemyRandom(int num_of_enemy, int floor){

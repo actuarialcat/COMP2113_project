@@ -14,7 +14,7 @@ public:
   char getDisplayChar();
 
   virtual bool collisionCheck(Character &player, std::string message[]);   //True for movable, False for collision
-  virtual void postMoveAction(Character &player, std::string message[]);
+  virtual bool postMoveAction(Character &player, std::string message[]);   //True for suicide after pass on.
 
 protected:
   //Constructer
@@ -37,7 +37,7 @@ public:
 
   //fuctions
   bool collisionCheck(Character &player, std::string message[]);
-  void postMoveAction(Character &player, std::string message[]);
+  bool postMoveAction(Character &player, std::string message[]);
 
 };
 
@@ -52,7 +52,7 @@ public:
 
   //fuctions
   bool collisionCheck(Character &player, std::string message[]);
-  void postMoveAction(Character &player, std::string message[]);
+  bool postMoveAction(Character &player, std::string message[]);
 
 };
 
@@ -67,7 +67,7 @@ public:
 
   //fuctions
   bool collisionCheck(Character &player, std::string message[]);
-  void postMoveAction(Character &player, std::string message[]);
+  bool postMoveAction(Character &player, std::string message[]);
 
 private:
   //variables
@@ -91,7 +91,7 @@ public:
 
   //fuctions
   bool collisionCheck(Character &p, std::string message[]);
-  void postMoveAction(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
 
 private:
   //variables
@@ -114,7 +114,7 @@ public:
 
   //fuctions
   bool collisionCheck(Character &p, std::string message[]);
-  void postMoveAction(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
 
 private:
   //variables
