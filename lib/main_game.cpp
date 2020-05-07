@@ -2,6 +2,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <curses.h>
 
 #include "../include/menu.h"
 #include "../include/Character.h"
@@ -37,16 +38,16 @@ void Gameover();
 
 //Game Initialization
 void MainGameInit(){
-
-  int height, width;
-  height = 10;
-  width = 20;
+  const int height = 10;
+  const int width = 20;
 
   //Init character
   Character p('@');
 
   //Init Map
   Map m(height, width, p.flr);
+  p.num_of_enemy = m.num_of_enemy;
+
   reveal_starting_map(p, m);
 
   //Init message
@@ -103,26 +104,32 @@ void GameLoop(Character &p, Map &m, string message[]){
     GameDisplay(p, m, message);
 
     //control input
-    int x = MoveInput(move_target_x, move_target_y);
+    int code = MoveInput(move_target_x, move_target_y);
 
-    if (check_boundary_condition(move_target_x, move_target_y, m)) {
-      reveal_map(p, m, move_target_x, move_target_y);
+    if(code == 0){
+      if (check_boundary_condition(move_target_x, move_target_y, m)) {
+        reveal_map(p, m, move_target_x, move_target_y);
 
-      //collision check and pre-move interaction
-      if( m.object_layer[move_target_y][move_target_x]->collisionCheck(p, message) ){
-        p.y = move_target_y;    //moving
-        p.x = move_target_x;
+        //collision check and pre-move interaction
+        if( m.object_layer[move_target_y][move_target_x]->collisionCheck(p, message) ){
+          p.y = move_target_y;    //moving
+          p.x = move_target_x;
 
-        if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
-          m.removeMapObject(p.x, p.y);
+          if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
+            m.removeMapObject(p.x, p.y);
+          }
         }
       }
+      else {
+        message[0] = "This is the edge of the dungeon.";
+        message[1] = "";
+      }
     }
-    else {
-      message[0] = "This is the edge of the dungeon.";
-      message[1] = "";
+    else if (code == 1){
+
     }
   }
+  
 
 }
 
@@ -146,6 +153,7 @@ void reveal_map(Character &p, Map &m, int dst_x, int dst_y){
 int MoveInput(int &move_target_x, int &move_target_y) {
   bool valid;
   char input;
+  int code = 0;
 
   while(!valid){
     std::cin >> input;
@@ -168,6 +176,9 @@ int MoveInput(int &move_target_x, int &move_target_y) {
         move_target_x++;
         break;
 
+      case '@':
+        code = 1;   //test mode
+
       /*call game pause manu;
       case :
         break;
@@ -178,7 +189,7 @@ int MoveInput(int &move_target_x, int &move_target_y) {
     }
   }
 
-  return input;
+  return code;
 }
 
 

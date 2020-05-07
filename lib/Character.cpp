@@ -10,4 +10,5 @@ Character::Character(char sym){
   x = 0;
   flr = 1;
   score = 0;
+  num_of_enemy = 0;
 }

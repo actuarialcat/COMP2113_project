@@ -59,7 +59,7 @@ void print_dungeon(Character p, Map m){
 
 void print_stats(Character p, Map m){
   cout << "Floor " << p.flr << endl;
-  cout << "Enemies left: " << m.num_of_enemy << endl;
+  cout << "Enemies left: " << p.num_of_enemy << endl;
   cout << "Hp " << p.hp << "/" << p.max_hp << endl;
   cout << "Exp " << p.expr << endl;
   cout << "Score " << p.score << endl;
