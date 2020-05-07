@@ -39,6 +39,7 @@ private:
   void placeEnemyRandom(int num_of_enemy, int floor);
   void placePotion(int num_large_potion, int num_small_potion);
   void placeHealthGem(int num_large_gem, int num_small_gem);
+  void placeTreasure(int num_large_treasure, int num_small_treasure);
 
   int findRandom(int &randy, int &randx);
 

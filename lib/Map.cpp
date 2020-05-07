@@ -20,6 +20,8 @@ Map::Map(int h, int w, int flr)
   const int num_small_potion = 5;
   const int num_large_gem = 5;
   const int num_small_gem = 5;
+  const int num_large_treasure = 5;
+  const int num_small_treasure = 5;
 
   //common pointer for deuplicative static objects
   wall_ptr = new ObjectWall('W');
@@ -38,6 +40,7 @@ Map::Map(int h, int w, int flr)
   placeEnemyRandom(num_of_enemy, floor);
   placePotion(num_large_potion, num_small_potion);
   placeHealthGem(num_large_gem, num_small_gem);
+  placeTreasure(num_large_treasure, num_small_treasure);
 
   generateNumberLayer();
   generateDiscoveryLayer();
@@ -100,6 +103,20 @@ void Map::placeHealthGem(int num_large_gem, int num_small_gem){
   for (int i = 0; i < num_small_gem; i++ ) {
     findRandom(randy, randx);
     object_layer[randy][randx] = new ObjectHealthGem('g', 1);
+  }
+}
+
+void Map::placeTreasure(int num_large_treasure, int num_small_treasure){
+  int randy, randx;
+
+  for (int i = 0; i < num_large_treasure; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectTreasure('T', 2);
+  }
+
+  for (int i = 0; i < num_small_treasure; i++ ) {
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectTreasure('t', 1);
   }
 }
 

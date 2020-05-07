@@ -250,9 +250,64 @@ void ObjectHealthGem::addMaxHP(Character &p, std::string message[]) {
   message_0.append(" health gem.");
   message[0] = message_0;
 
-  string message_1 = "Your max HP is increase by ";
+  string message_1 = "Your max HP is increased by ";
   message_1.append(to_string(hp_increase));
   message_1.append(" hp.");
+  message[1] = message_1;
+}
+
+/////////////////////////////////////////////
+//ObjectTreasure
+
+ObjectTreasure::ObjectTreasure(char display_symbol, int init_size) 
+: GameObjectBase(display_symbol)
+{  
+  size = init_size;
+  
+  score_increase = (size == 1) ? 100 : 500;    //size 1=small, 2=large
+  hidden = true;
+}
+
+bool ObjectTreasure::collisionCheck(Character &player, std::string message[]){
+  if (hidden){
+    reveal(message);
+    hidden = false;
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+bool ObjectTreasure::postMoveAction(Character &player, std::string message[]){
+  addscore(player, message);
+  return true;
+}
+
+//---------------------------------------------
+
+void ObjectTreasure::reveal(std::string message[]) {
+
+  string message_0 = "You found a ";
+  message_0.append((size == 1) ? "small" : "large");
+  message_0.append(" treasure.");
+  message[0] = message_0;
+
+  message[1] = "";
+}
+
+void ObjectTreasure::addscore(Character &p, std::string message[]) {
+
+  p.score = p.score + score_increase;
+
+  string message_0 = "You open a ";
+  message_0.append((size == 1) ? "small" : "large");
+  message_0.append(" treasure.");
+  message[0] = message_0;
+
+  string message_1 = "Your gain ";
+  message_1.append(to_string(score_increase));
+  message_1.append(" score.");
   message[1] = message_1;
 }
 

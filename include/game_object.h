@@ -127,6 +127,29 @@ private:
   void addMaxHP(Character &p, std::string message[]);
 };
 
+//---------------------------------------------
+
+class ObjectTreasure : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectTreasure(char display_symbol, int init_size);
+
+  //fuctions
+  bool collisionCheck(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
+
+private:
+  //variables
+  int size;
+  int score_increase;
+  bool hidden;
+
+  //fuctions
+  void reveal(std::string message[]);
+  void addscore(Character &p, std::string message[]);
+};
+
 
 
 
