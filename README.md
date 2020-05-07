@@ -7,7 +7,7 @@ Fong Cheuk Ting, u3035688784
 Leung Chak Sum, 3035470905  
 *Important!!! The contribution graph is messed up. Fong Cheuk Ting's contribution should minus 10082 lines.*
 ## Game description
-Sweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a the most greedy treasure seeker in the world who sneak into a 8 storey dungeon overwhelmed with dangerous monsters to gather as much treasure as possible. You have the amazing "minesweeper" ability to sense the presence of surroundings' ememies. Use this power wisely to avoid encountering monsters as much as possible. There are also special items inside the dungeon which helps you survived longer.
+Minesweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a the most greedy treasure seeker in the world who sneak into a treasure dungeon overwhelmed with dangerous monsters to gather as much treasure as possible. You have the amazing "minesweeper" ability to sense the presence of surroundings' ememies. Use this power wisely to avoid encountering monsters as much as possible. There are also special items inside the dungeon which helps you survived longer.
 
 Player start on 1st floor with 30 health. Everytime you enter a new floor, every tile except 3x3 area of your starting location will be "?". Unlike traditional minsweeper game where you can click any tile you wish, treasure seeker doesn't have the ability of teleport. You can only reveal and move to the 4 tiles next your current position by pressing w/a/s/d key. Whenever you reveal a "?" tile, there are three basic possible outcome:
 
