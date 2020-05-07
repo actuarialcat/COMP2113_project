@@ -141,6 +141,8 @@ void GameLoop(Character &p, Map &m, string message[]){
     }
     else if (code == 1){
         test_mode(p, m);
+    } else if (code == -1){ //if press 'Q', break the while loop
+      break;
     }
   }
 
@@ -192,6 +194,9 @@ int MoveInput(int &move_target_x, int &move_target_y) {
 
       case '@':
         code = 1;   //test mode
+        break;
+      case 'Q': //soft exit
+        code = -1;
         break;
 
       /*call game pause manu;

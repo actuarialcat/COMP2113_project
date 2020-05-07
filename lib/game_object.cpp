@@ -126,10 +126,10 @@ void ObjectEnemy::direct_combat(Character &p, int &hp, int lvl, std::string mess
 
 int ObjectEnemy::Dice(int lvl) {
   srand(time(NULL));
-  int damage = 3; //base damage
+  int damage = 0; //base damage
 
   for (int i=0; i<2; i++) {
-    damage += rand() % lvl + 1;
+    damage += rand() % (lvl*2) + 3;
   }
 
   return damage;
