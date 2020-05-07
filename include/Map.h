@@ -15,6 +15,7 @@ public:
   //variable
   int height, width, floor;
   int num_of_enemy;
+  char doom_mode;
   /*
   Init 3 layers 2d map
   upper layer: ? layer
@@ -26,9 +27,9 @@ public:
   vector<vector<char>> number_layer;
 
   //functions
-  Map(int h, int w, int floor);
+  Map(int h, int w, int floor, char dm);
   ~Map();
-  
+
   void deleteAll();
   void removeMapObject(int x, int y);
 

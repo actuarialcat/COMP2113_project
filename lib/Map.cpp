@@ -9,13 +9,14 @@ using namespace std;
 
 /////////////////////////////////////////////
 
-Map::Map(int h, int w, int flr)
+Map::Map(int h, int w, int flr, char dm)
 {
   height = h;
   width = w;
   floor = flr;
-  num_of_enemy = h*w*0.2 + flr*5; //depending on floor
-  
+  doom_mode = dm;
+  num_of_enemy = 45 + flr*5; //depending on floor
+
   const int num_large_potion = 5;
   const int num_small_potion = 5;
   const int num_large_gem = 5;
@@ -36,7 +37,7 @@ Map::Map(int h, int w, int flr)
 
 
   //Generate each layer
-  srand(time(NULL)); 
+  srand(time(NULL));
   placeEnemyRandom(num_of_enemy, floor);
   placePotion(num_large_potion, num_small_potion);
   placeHealthGem(num_large_gem, num_small_gem);
@@ -61,7 +62,7 @@ void Map::deleteAll() {
       }
     }
   }
-  
+
   delete wall_ptr;
   delete floor_ptr;
 }
@@ -160,6 +161,12 @@ void Map::generateNumberLayer(){
             continue;
           if (object_layer[i+k][j+l]->getDisplayChar() == 'E')
             count++;
+        }
+      }
+      //doom mode modification
+      if (doom_mode == 'y'){
+        if (count > 3){
+          count = 3;
         }
       }
       number_layer[i][j] = '0' + count;

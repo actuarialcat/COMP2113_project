@@ -41,7 +41,18 @@ void Gameover(int final_score);
 
 //Game Initialization
 void MainGameInit(){
-
+  //clear screen
+  for (int i=0;i<50;i++){
+    cout << endl;
+  }
+  //doom mode determination
+  cout << "Would you like to activate the doom mode?(y/n)" << endl;
+  cout << "(number tile will no longer exceed '3' when" << endl;
+  cout << "there are more than 3 enemies in the surroundings)" << endl;
+  char doom_mode;
+  cin >> doom_mode;
+  
+  //init map size
   int height, width;
   height = 10;
   width = 20;
@@ -50,7 +61,7 @@ void MainGameInit(){
   Character p('@');
 
   //Init Map
-  Map m(height, width, p.flr);
+  Map m(height, width, p.flr, doom_mode);
   reveal_starting_map(p, m);
 
   //Init message

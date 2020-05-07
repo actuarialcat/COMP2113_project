@@ -3,6 +3,8 @@ using namespace std;
 #include "../include/menu.h"
 
 using namespace std;
+
+
 int main(){
   //Initialize menu
   MainMenuInit();   //manu.h
@@ -13,5 +15,6 @@ int main(){
   }
   //prgram end
   cout << "Program end" << endl;
+  
   return (0);
 }

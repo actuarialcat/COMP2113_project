@@ -39,10 +39,12 @@ void MenuDisplay(int highlight){
   //set width and height
   const int height = 9;
   const int width = 30;
+
   //print upper border
   for (int i=0;i<width+2;i++){
     cout << "-";
   }
+
   cout << endl;
   //print content
   string options[9] =
@@ -81,7 +83,8 @@ int NavigateMenu() {
   //menu loop
   MenuDisplay(highlight);
   cin >> input;
-  while (input != 'y'){ //replace ENTER
+  //replace ENTER with 'y' key
+  while (input != 'y'){
     if (input == 'w'){
       if (highlight == 1){
         highlight = 6;
@@ -145,7 +148,16 @@ void print_high_score(){
   //some fake values written mannually for testing
   while (fin >> name){
     i++;
-    cout << to_string(i) << ") " << left << setw(8) << name;
+    if (i == 1){
+      cout << "1st ";
+    } else if (i == 2){
+      cout << "2nd ";
+    } else if (i == 3){
+      cout << "3rd ";
+    } else {
+      cout << to_string(i) << "th ";
+    }
+    cout << left << setw(8) << name;
     fin >> score;
     cout << right << setw(8) << score << endl;
   }
