@@ -143,7 +143,8 @@ ObjectPotion::ObjectPotion(char display_symbol, int init_size)
 {
   size = init_size;
 
-  perc_heal = (size == 1) ? 0.5 : 1;    //size 1=small, 2=large
+  //where we change the heal percentage
+  perc_heal = (size == 1) ? 0.1 : 0.25;    //size 1=small, 2=large
   hidden = true;
 }
 
@@ -207,7 +208,7 @@ ObjectHealthGem::ObjectHealthGem(char display_symbol, int init_size)
 {
   size = init_size;
 
-  hp_increase = (size == 1) ? 5 : 10;    //size 1=small, 2=large
+  hp_increase = (size == 1) ? 3 : 6;    //size 1=small, 2=large
   hidden = true;
 }
 
@@ -263,7 +264,7 @@ ObjectTreasure::ObjectTreasure(char display_symbol, int init_size)
 {
   size = init_size;
 
-  score_increase = (size == 1) ? 100 : 500;    //size 1=small, 2=large
+  score_increase = (size == 1) ? 20 : 50;    //size 1=small, 2=large
   hidden = true;
 }
 
@@ -308,4 +309,49 @@ void ObjectTreasure::addscore(Character &p, std::string message[]) {
   message_1.append(to_string(score_increase));
   message_1.append(" score.");
   message[1] = message_1;
+}
+//////////////////////////////////////////////////////////
+//Object Stair
+ObjectStair::ObjectStair(char display_symbol, int floor)
+: GameObjectBase(display_symbol)
+{
+  floor = floor;
+  score_increase = 100;
+  hidden = true;
+}
+
+bool ObjectStair::collisionCheck(Character &player, std::string message[]){
+  if (hidden){
+    reveal(message);
+    hidden = false;
+    return false;
+  }
+  else {
+    return true;
+  }
+}
+
+bool ObjectStair::postMoveAction(Character &player, std::string message[]){
+  addscore(player, message);
+  return true;
+}
+//-------------------------------------------------
+void ObjectStair::reveal(std::string message[]) {
+
+  string message_0 = "You found the staircase.";
+  message[0] = message_0;
+
+  message[1] = "";
+}
+
+void ObjectStair::addscore(Character &p, std::string message[]) {
+
+  p.score = p.score + score_increase;
+
+  string message_0 = "You gain 100 score for passing this floor.";
+  message[0] = message_0;
+
+  string message_1 = "Press any key to climb to the next floor.";
+  message[1] = message_1;
+
 }

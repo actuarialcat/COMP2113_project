@@ -37,7 +37,7 @@ void MenuDisplay(int highlight){
     cout << endl;
   }
   //set width and height
-  const int height = 9;
+  const int height = 8;
   const int width = 30;
 
   //print upper border
@@ -47,15 +47,14 @@ void MenuDisplay(int highlight){
 
   cout << endl;
   //print content
-  string options[9] =
+  string options[8] =
   {
-    "Minesweeper Dungeon",
+    "     Minesweeper Dungeon",
+    "",
     "1) New game",
-    "2) Load game",
-    "3) Instruction",
-    "4) Setting",
-    "5) High score",
-    "6) Quit",
+    "2) Leaderboard",
+    "3) Quit",
+    "",
     "Press w/s to scroll up/down",
     "Press y to confirm option"
   };
@@ -79,21 +78,21 @@ void MenuDisplay(int highlight){
 
 int NavigateMenu() {
   char input;
-  int highlight = 1;
+  int highlight = 2;
   //menu loop
   MenuDisplay(highlight);
   cin >> input;
   //replace ENTER with 'y' key
   while (input != 'y'){
     if (input == 'w'){
-      if (highlight == 1){
-        highlight = 6;
+      if (highlight == 2){
+        highlight = 4;
       } else {
         highlight--;
       }
     } else if (input == 's'){
-      if (highlight == 6){
-        highlight = 1;
+      if (highlight == 4){
+        highlight = 2;
       } else {
         highlight++;
       }
@@ -107,27 +106,15 @@ int NavigateMenu() {
 
 void MenuOption(int option) {
   switch (option) {
-    case 1:
+    case 2:
       MainGameInit();
       break;
 
-    case 2:
-      //load_game();
-      break;
-
     case 3:
-      //print_instruction();
-      break;
-
-    case 4:
-      //setting_menu();
-      break;
-
-    case 5:
       print_high_score();
       break;
 
-    case 6:
+    case 4:
       break;
 
   }

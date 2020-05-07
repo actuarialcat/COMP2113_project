@@ -15,14 +15,19 @@ Map::Map(int h, int w, int flr, char dm)
   width = w;
   floor = flr;
   doom_mode = dm;
-  num_of_enemy = 45 + flr*5; //depending on floor
+  num_of_enemy = 35 + flr*5; //depending on floor
+  //infinite floor, number of enemies capped at 100 (50%) for now
+  if (num_of_enemy > 100){
+    num_of_enemy = 100;
+  }
 
-  const int num_large_potion = 5;
-  const int num_small_potion = 5;
-  const int num_large_gem = 5;
-  const int num_small_gem = 5;
-  const int num_large_treasure = 5;
-  const int num_small_treasure = 5;
+  const int num_large_potion = 3; //better stuffs should be rarer
+  const int num_small_potion = 6;
+  const int num_large_gem = 3;
+  const int num_small_gem = 6;
+  const int num_large_treasure = 3;
+  const int num_small_treasure = 6;
+  const int num_stair = 10;
 
   //common pointer for deuplicative static objects
   wall_ptr = new ObjectWall('W');
@@ -42,7 +47,7 @@ Map::Map(int h, int w, int flr, char dm)
   placePotion(num_large_potion, num_small_potion);
   placeHealthGem(num_large_gem, num_small_gem);
   placeTreasure(num_large_treasure, num_small_treasure);
-
+  placeStair(num_stair, floor);
   generateNumberLayer();
   generateDiscoveryLayer();
 
@@ -123,6 +128,15 @@ void Map::placeTreasure(int num_large_treasure, int num_small_treasure){
   for (int i = 0; i < num_small_treasure; i++ ) {
     findRandom(randy, randx);
     object_layer[randy][randx] = new ObjectTreasure('t', 1);
+  }
+}
+
+void Map::placeStair(int num_stair, int floor){
+  int randy, randx;
+
+  for (int i=0;i<num_stair;i++){
+    findRandom(randy, randx);
+    object_layer[randy][randx] = new ObjectStair('U', floor);
   }
 }
 

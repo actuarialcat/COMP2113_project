@@ -19,7 +19,7 @@ public:
 protected:
   //Constructer
   GameObjectBase(char display_symbol);
-  
+
   //variables
   char display_char;
 
@@ -149,7 +149,26 @@ private:
   void reveal(std::string message[]);
   void addscore(Character &p, std::string message[]);
 };
+//-------------------------------------------------
 
+class ObjectStair : public GameObjectBase
+{
+public:
+  //Constructer
+  ObjectStair(char display_symbol, int floor);
+
+  //functions
+  bool collisionCheck(Character &p, std::string message[]);
+  bool postMoveAction(Character &p, std::string message[]);
+private:
+  int floor;
+  int score_increase; //increase score if pass a floor
+  bool hidden;
+
+  //functions
+  void reveal(std::string message[]);
+  void addscore(Character &p, std::string message[]);
+};
 
 
 

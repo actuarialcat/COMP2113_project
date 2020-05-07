@@ -58,6 +58,12 @@ void print_dungeon(Character p, Map m){
 }
 
 void print_stats(Character p, Map m){
+  cout << endl;
+  if (p.doom_mode == true){
+    cout << "\"Doom Mode\"" << endl;
+  } else {
+    cout << "Normal Mode" << endl;
+  }
   cout << "Floor " << p.flr << endl;
   cout << "Enemies left: " << p.num_of_enemy << endl;
   cout << "Hp " << p.hp << "/" << p.max_hp << endl;

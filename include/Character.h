@@ -12,7 +12,7 @@ public:
   int y, x;
   int score;
   int num_of_enemy;
-
+  bool doom_mode; //for mode inherit
   //Constructer
   Character(char sym);
 

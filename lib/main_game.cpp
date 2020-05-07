@@ -54,11 +54,11 @@ void MainGameInit(){
   height = 10;
   width = 20;
 
-  //Init character
+  //Init character and start new game
   Character p('@');
-
   //Init Map
   Map m(height, width, p.flr, doom_mode);
+  p.doom_mode = m.doom_mode;
   p.num_of_enemy = m.num_of_enemy;
   reveal_starting_map(p, m);
 
@@ -82,6 +82,32 @@ void MainGameInit(){
   MainMenuInit();
 }
 
+//Next Floor Initialization
+void NextFloor(Character &p){
+
+  for (int i=0;i<50;i++){
+    cout << endl;
+  }
+
+  //init map size
+  int height, width;
+  height = 10;
+  width = 20;
+
+  //Init Map
+  Map m(height, width, p.flr, p.doom_mode);
+  p.num_of_enemy = m.num_of_enemy;
+  reveal_starting_map(p, m);
+
+  string message[2];
+  string message_0 = "You entered Floor ";
+  message_0.append(to_string(p.flr));
+  message[0] = message_0;
+  message[1] = "It is getting harder. Good luck!";
+
+  //start game
+  GameLoop(p, m, message);
+}
 //--------------------------------------------
 
 void reveal_starting_map(Character &p, Map &m) {
@@ -109,7 +135,7 @@ bool check_boundary_condition(int x, int y, Map m) {
 
 void GameLoop(Character &p, Map &m, string message[]){
   int move_target_x, move_target_y;
-
+  bool floor_pass = false;
   while(check_not_end_game(p)){
     move_target_x = p.x;
     move_target_y = p.y;
@@ -130,6 +156,13 @@ void GameLoop(Character &p, Map &m, string message[]){
           p.x = move_target_x;
 
           if(m.object_layer[p.y][p.x]->postMoveAction(p, message)){   //post move interaction
+            //stair up determination
+            if (m.object_layer[p.y][p.x]->getDisplayChar() == 'U'){
+              floor_pass = true;
+              //Display one more time to show the final message
+              GameDisplay(p, m, message);
+              break;
+            }
             m.removeMapObject(p.x, p.y);
           }
         }
@@ -144,6 +177,14 @@ void GameLoop(Character &p, Map &m, string message[]){
     } else if (code == -1){ //if press 'Q', break the while loop
       break;
     }
+
+  }
+  if (floor_pass == true){
+    char input;
+    cin >> input;
+    //move to next floor, inherit player stats
+    p.flr++;
+    NextFloor(p);
   }
 
 
