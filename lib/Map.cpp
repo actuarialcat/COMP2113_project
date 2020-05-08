@@ -9,25 +9,25 @@ using namespace std;
 
 /////////////////////////////////////////////
 
-Map::Map(int h, int w, int flr, char dm)
+Map::Map(int h, int w, int flr)
 {
   height = h;
   width = w;
   floor = flr;
-  doom_mode = dm;
   num_of_enemy = 35 + flr*5; //depending on floor
+  doom_mode = false;
   //infinite floor, number of enemies capped at 100 (50%) for now
   if (num_of_enemy > 100){
     num_of_enemy = 100;
   }
 
   const int num_large_potion = 3; //better stuffs should be rarer
-  const int num_small_potion = 6;
+  const int num_small_potion = 10;
   const int num_large_gem = 3;
   const int num_small_gem = 6;
   const int num_large_treasure = 3;
-  const int num_small_treasure = 6;
-  const int num_stair = 10;
+  const int num_small_treasure = 10;
+  const int num_stair = 3; //1 feel like too hard and boring if you get unlucky
 
   //common pointer for deuplicative static objects
   wall_ptr = new ObjectWall('W');
@@ -178,7 +178,7 @@ void Map::generateNumberLayer(){
         }
       }
       //doom mode modification
-      if (doom_mode == 'y'){
+      if (doom_mode){
         if (count > 3){
           count = 3;
         }

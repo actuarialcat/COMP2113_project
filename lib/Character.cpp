@@ -9,6 +9,7 @@ Character::Character(char sym){
   expr = 100;
   max_hp = 30;
   hp = 30;
+  doom_mode = false; 
   //randomize starting location
   srand(time(NULL));
   y = rand() % 10; //need to modify mannually if we change the map size

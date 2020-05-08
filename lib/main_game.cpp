@@ -48,7 +48,6 @@ void MainGameInit(){
   cout << "there are more than 3 enemies in the surroundings)" << endl;
   char doom_mode;
   cin >> doom_mode;
-
   //init map size
   int height, width;
   height = 10;
@@ -57,8 +56,14 @@ void MainGameInit(){
   //Init character and start new game
   Character p('@');
   //Init Map
-  Map m(height, width, p.flr, doom_mode);
-  p.doom_mode = m.doom_mode;
+  Map m(height, width, p.flr);
+
+  //doom mode modification
+  if (doom_mode == 'y'){
+    m.doom_mode = true;
+    p.doom_mode = true;
+  }
+
   p.num_of_enemy = m.num_of_enemy;
   reveal_starting_map(p, m);
 
@@ -96,7 +101,13 @@ void NextFloor(Character &p){
   width = 20;
 
   //Init Map
-  Map m(height, width, p.flr, p.doom_mode);
+  Map m(height, width, p.flr);
+  //doom_mode modification
+  if (p.doom_mode){
+    m.doom_mode = true;
+  }
+  
+  //refresh enemies count
   p.num_of_enemy = m.num_of_enemy;
   reveal_starting_map(p, m);
 

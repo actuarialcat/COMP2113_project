@@ -131,7 +131,7 @@ int ObjectEnemy::Dice(int lvl) {
   int damage = 0; //base damage
 
   for (int i=0; i<2; i++) {
-    damage += rand() % (lvl*2) + 3;
+    damage += rand() % (lvl*2+3);
   }
 
   return damage;
@@ -146,7 +146,7 @@ ObjectPotion::ObjectPotion(char display_symbol, int init_size)
   size = init_size;
 
   //where we change the heal percentage
-  perc_heal = (size == 1) ? 0.1 : 0.25;    //size 1=small, 2=large
+  perc_heal = (size == 1) ? 0.15 : 0.3;    //size 1=small, 2=large
   hidden = true;
 }
 
@@ -314,10 +314,10 @@ void ObjectTreasure::addscore(Character &p, std::string message[]) {
 }
 //////////////////////////////////////////////////////////
 //Object Stair
-ObjectStair::ObjectStair(char display_symbol, int floor)
+ObjectStair::ObjectStair(char display_symbol, int init_floor)
 : GameObjectBase(display_symbol)
 {
-  floor = floor;
+  floor = init_floor;
   score_increase = 100;
   hidden = true;
 }

@@ -62,7 +62,7 @@ void print_stats(Character p, Map m){
   if (p.doom_mode == true){
     cout << "\"Doom Mode\"" << endl;
   } else {
-    cout << "Normal Mode" << endl;
+    cout << "\"Normal Mode\"" << endl;
   }
   cout << "Floor " << p.flr << endl;
   cout << "Hidden enemies: " << p.num_of_enemy << endl;

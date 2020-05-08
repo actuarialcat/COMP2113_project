@@ -155,7 +155,7 @@ class ObjectStair : public GameObjectBase
 {
 public:
   //Constructer
-  ObjectStair(char display_symbol, int floor);
+  ObjectStair(char display_symbol, int init_floor);
 
   //functions
   bool collisionCheck(Character &p, std::string message[]);
