@@ -27,7 +27,7 @@ public:
   vector<vector<char>> number_layer;
 
   //functions
-  Map(int h, int w, int floor);
+  Map(int h, int w, int floor, bool init_doom_mode);
   ~Map();
 
   void deleteAll();
