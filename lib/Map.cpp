@@ -16,6 +16,8 @@ Map::Map(int h, int w, int flr, bool init_doom_mode)
   floor = flr;
   num_of_enemy = 35 + flr*5; //depending on floor
   doom_mode = init_doom_mode;
+
+
   //infinite floor, number of enemies capped at 100 (50%) for now
   if (num_of_enemy > 100){
     num_of_enemy = 100;

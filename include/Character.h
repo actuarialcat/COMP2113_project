@@ -1,18 +1,33 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
+
+
 class Character {
 public:
-  //variable
+  //the character image
   char symbol;
+
+  //floor the player at
   int flr;
-  int lv;
-  int expr; //expereince needed to level up
+
+  //current hp and maximum hp of the character
   int max_hp, hp;
+
+  //coordinate of the character
   int y, x;
+
+  //current score of the character
   int score;
+
+  //number of hidden enemies left in the current floor
   int num_of_enemy;
-  bool doom_mode; //for mode inherit
+
+
+  //for mode inherit
+  bool doom_mode;
+
+
   //Constructer
   Character(char sym);
 
@@ -20,5 +35,7 @@ public:
 
 
 };
+
+
 
 #endif

@@ -318,17 +318,20 @@ void test_mode(Character &p, Map &m){
 
 void Gameover(int final_score)
 {
+  
   //Gameover message
   cout << "Gameover, you run out of hp and have to leave the dungeon." << endl;
   cout << "Your final score is " << final_score << endl;
   cout << "Please input for name: (no more than 8 characters)" << endl;
   string this_game_name;
   cin >> this_game_name;
+
   //create a dictionary
   map<int, string> leaderboard;
   leaderboard[final_score] = this_game_name;
   vector<int> list_of_score;
   list_of_score.push_back(final_score);
+
   //get data from Highscore.txt
   ifstream fin("Highscore.txt");
   if (fin.fail()){exit(1);}
@@ -341,8 +344,10 @@ void Gameover(int final_score)
     list_of_score.push_back(score);
   }
   fin.close();
+
   //sort list_of_score in descending order
   sort(list_of_score.begin(), list_of_score.end(), greater<int>());
+
   //rewrite Highscore.txt
   ofstream fout("Highscore.txt");
   if (fout.fail()){exit(1);}
@@ -353,6 +358,8 @@ void Gameover(int final_score)
     }
   }
   fout.close();
+
+
   //Back to Main Menu
   cout << "Press any key to go back to Main Menu." << endl;
   char input;

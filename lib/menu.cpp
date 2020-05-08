@@ -36,6 +36,7 @@ void MenuDisplay(int highlight){
   for (int i=0;i<30;i++){
     cout << endl;
   }
+
   //set width and height
   const int height = 8;
   const int width = 30;
@@ -46,6 +47,7 @@ void MenuDisplay(int highlight){
   }
 
   cout << endl;
+
   //print content
   string options[8] =
   {
@@ -68,6 +70,7 @@ void MenuDisplay(int highlight){
     }
     cout << "|" << endl;
   }
+
   //print lower border
   for (int i=0;i<width+2;i++){
     cout << "-";
@@ -79,9 +82,11 @@ void MenuDisplay(int highlight){
 int NavigateMenu() {
   char input;
   int highlight = 2;
+
   //menu loop
   MenuDisplay(highlight);
   cin >> input;
+  
   //replace ENTER with 'y' key
   while (input != 'y'){
     if (input == 'w'){

@@ -160,9 +160,12 @@ public:
   //functions
   bool collisionCheck(Character &p, std::string message[]);
   bool postMoveAction(Character &p, std::string message[]);
+
 private:
+  
   int floor;
-  int score_increase; //increase score if pass a floor
+  //increase score if pass a floor
+  int score_increase;
   bool hidden;
 
   //functions

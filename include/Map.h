@@ -12,6 +12,7 @@ using namespace std;
 class Map
 {
 public:
+  
   //variable
   int height, width, floor;
   int num_of_enemy;
