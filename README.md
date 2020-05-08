@@ -5,7 +5,7 @@ COMP 2113 Project for Group 225
 
 Fong Cheuk Ting, u3035688784  
 Leung Chak Sum, 3035470905  
-*Important!!! The contribution graph is messed up. Fong Cheuk Ting's contribution should minus 10082 lines.*
+
 ## Game description
 Minesweeper Dungeon is a rougue-like RPG combined with minsweeper. You are a the most greedy treasure seeker in the world who sneak into a treasure dungeon overwhelmed with dangerous monsters to gather as much treasure as possible. You have the amazing "minesweeper" ability to sense the presence of surroundings' ememies. Use this power wisely to avoid encountering monsters as much as possible. There are also special items inside the dungeon which helps you survived longer.
 
