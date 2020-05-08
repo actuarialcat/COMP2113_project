@@ -64,7 +64,7 @@ Player will gain or lose score when they achieve certain progress in the game. I
 2) kill a monster: +10  
 3) get a treasure chest: +20/+50  
 4) pass a floor: + 100  
-
+5) doom mode: final score multiply by 2!  
 ### High Score
 Save highscore once a game is completed. Sorting algorithm is used here.
 
