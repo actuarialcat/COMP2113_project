@@ -24,11 +24,13 @@ Legend has it that the dungeon has infinite floor, your goal is collect as much 
 ### Compiling
 
 The makefile provided will handle the compilation of the whole program. Just use the following command.
+
 `make main`
 
 ### Starting
 
 To run the game, execute the outputed program "main". Or use the following command.
+
 `make run`
 
 ### Interacting with the game
@@ -41,18 +43,19 @@ TIP: Remeber to press "enter"
 ### Test mode
 
 When playing the game, the following test mode commands are available.
-Enter the commands in such format. (Remeber to start with "@")
+Enter the commands in such format. (Remeber to start with "@").
+
 `@<function> <arg>`
 
-| function            | Description |
+| Function            | Description |
 |---------------------|-------------|
 | reveal              | Reveal the entire map. No arguments. |
-| hp                  | Set the current player hp to <arg>. |
-| max_hp              | Set the maximum player hp to <arg>. |
-| x                   | Set the player's x-coordinates to <arg>. |
-| y                   | Set the player's y-coordinates to <arg>. |
-| floor               | Set the current floor to <arg>. Will not affect current the level. Only affect the next level. |
-| score               | Set the current player score to <arg>. |
+| hp                  | Set the current player hp to `<arg>`. |
+| max_hp              | Set the maximum player hp to `<arg>`. |
+| x                   | Set the player's x-coordinates to `<arg>`. |
+| y                   | Set the player's y-coordinates to `<arg>`. |
+| floor               | Set the current floor to `<arg>`. Will not affect current the level. Only affect the next level. |
+| score               | Set the current player score to `<arg>`. |
 
 
 ## Requirements Mapping
