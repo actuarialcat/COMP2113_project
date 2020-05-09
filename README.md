@@ -85,7 +85,7 @@ This chart show the flowchart for the main game loop. It summarize the logic of 
 
 
 ### Game map
-The game map is created using a Map object. The Map object include a 2-D pointer array which points to the corresponding "game object" in each coordiante space. For example, if (1,1) should have a enemy, the [1][1] element of the array will point to a dynamically create object belonging to the class Enemy. The map object also include methods to populate the map with "game objects" during initizliation and methods to delete a specific object after the it is removed from play (e.g. enemy is killed, potion is used, etc.).
+The game map is created using a Map object. The Map object include a 2-D pointer array which points to the corresponding "game object" in each coordinate space. For example, if (1,1) should have a enemy, the [1][1] element of the array will point to a dynamically created object belonging to the class Enemy. The map object also include methods to populate the map with "game objects" during initizliation and methods to delete a specific object after the it is removed from play (e.g. enemy is killed, potion is used, etc.).
 
 "Game object" is a family of classes. The base the class is GameObjectBase. This class provide the general method and attributes which all "Game object" use to interact with the game. It provide a constructor and 3 methods: a getter method to the display character (i.e. how to display this object), a collision check method (i.e. what to do when the player want to move into this object, can the player move?), and a post movement interaction method (i.e. what happen after the player successfully move on top of this object).
 
