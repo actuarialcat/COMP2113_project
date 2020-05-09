@@ -65,7 +65,7 @@ The following table show the mapping between our features and coding requirement
 |---------------------|:-----------:|---------------|----------------|
 | Level generation    |      1      | Enemies, power-ups and other objects will be place randomly when generating a new level. | Map.cpp function "findRandom" (line 145-155) generate the random location to place new objects. |
 | Combat damage       |      1      | Combat damage taken by the plater when encountering enemies will be randomized. | Game_object.cpp ObjectEnemy member function "Dice" (line 64-71) generate random damage for combat. |
-| Game objects        |     2, 3    | Enemies, power-ups, .etc will be stored as instance objects of the corresponding class, create or removed when necessary. <br> (See detail below) | GameObject.cpp and Map.cpp | 
+| Game objects        |     2, 3    | Enemies, power-ups, .etc will be stored as instance objects of the corresponding class, create or removed when necessary. <br> (See "Game Map" below) | GameObject.cpp and Map.cpp | 
 | High Score          |      4      | High scores after completing a game will be saved inside a text file. The program can read from the file for high scores in previous attempts. | menu.cpp function "print_high_score" (line 129-161) and main_game.cpp function "Gameover" (line 313-361) |
 | Modular programming |      5      | Modules are kepped in a mulitple files. <br> (See dependant graph below) | / |
 
@@ -78,16 +78,22 @@ This chart shows the global structure of our program. It include a main game loo
 ![global structure chart](/charts/Global_Structure.png)
 
 
-
-
-### Game flowchart and objects
-
-
-
+### Game flowchart
 This chart show the flowchart for the main game loop. It summarize the logic of program when main game is running.
 
 ![global structure chart](/charts/main_game_flowchart.png)
 
+
+### Game map
+The game map is created using a Map object. The Map object include a 2-D pointer array which points to the corresponding "game object" in each coordiante space. For example, if (1,1) should have a enemy, the [1][1] element of the array will point to a dynamically create object belonging to the class Enemy. The map object also include methods to populate the map with "game objects" during initizliation and methods to delete a specific object after the it is removed from play (e.g. enemy is killed, potion is used, etc.).
+
+"Game object" is a family of classes. The base the class is GameObjectBase. This class provide the general method and attributes which all "Game object" use to interact with the game. It provide a constructor and 3 methods: a getter method to the display character (i.e. how to display this object), a collision check method (i.e. what to do when the player want to move into this object, can the player move?), and a post movement interaction method (i.e. what happen after the player successfully move on top of this object).
+
+All of the "Game object" are inherited from GameObjectBase class. This include enemies, potions, treasures etc. Each child class will have addtional private methods and attributes to facilitate programming the collision check method and the post movement interaction.
+
+Moreover, note that some objects which is static in nature (e.g. empty floor) are only created once. The the map pointers in various coordinate only points to the same object to save memory space.
+
+The purpose of such programming architecture is that it can provide a uniform interface between the player object and all type of "Game object" (include new ones to be added in the future).
 
 This chart show the objects used to fill up the Map.
 
