@@ -285,12 +285,6 @@ void test_mode(Character &p, Map &m){
       }
     }
   }
-  else if(inp == "lvl"){
-    p.lv = arg;
-  }
-  else if(inp == "expr"){
-    p.expr = arg;
-  }
   else if(inp == "max_hp"){
     p.max_hp = arg;
   }
