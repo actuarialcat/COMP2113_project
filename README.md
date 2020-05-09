@@ -27,6 +27,11 @@ The makefile provided will handle the compilation of the whole program. Just use
 
 `make main`
 
+For clean compiling use the following:
+
+`make -B main`
+
+
 ### Starting
 
 To run the game, execute the outputed program "main". Or use the following command.
