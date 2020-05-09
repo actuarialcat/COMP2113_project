@@ -35,7 +35,7 @@ To run the game, execute the outputed program "main". Or use the following comma
 
 ### Interacting with the game
 
-To input commands into the game, type a single letter command then press "enter". (This is a limiation due to '<iostream>')
+To input commands into the game, type a single letter command then press "enter". (This is a limiation due to `<iostream>`)
 In-game instruction will provide the description of the commands available.
 
 TIP: Remeber to press "enter"
