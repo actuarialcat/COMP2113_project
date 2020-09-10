@@ -1,5 +1,5 @@
-# COMP2113_project
-COMP 2113 Project for Group 225
+# Minesweeper Dungeon
+COMP 2113 Course Project
 
 ## Brief identification of the team members
 
